@@ -1,4 +1,4 @@
-package com.app.weather.presentation
+package com.app.core.data.repository
 
 import com.app.core.data.repository.HomeRepository
 import com.app.core.data.repository.HomeRepositoryImp
