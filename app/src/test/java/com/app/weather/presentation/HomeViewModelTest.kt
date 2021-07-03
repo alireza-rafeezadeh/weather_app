@@ -1,7 +1,10 @@
 package com.app.weather.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.app.core.data.repository.home.HomeRepository
 import com.app.core.domain.*
+import com.app.core.interactor.weather.ForecastInteractor
+import com.app.core.interactor.weather.HomeInteractors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Test
@@ -23,7 +26,7 @@ class HomeViewModelTest {
 
     @Before
     fun setUp() {
-        homeViewModel = HomeViewModel(FakeHomeRepository())
+        homeViewModel = HomeViewModel(HomeInteractors(ForecastInteractor(FakeHomeRepository())))
     }
 
     @Test
@@ -42,6 +45,6 @@ class HomeViewModelTest {
 
         val expectedResp = ForecastResponse(current, Forecast(emptyList()), location)
 
-        assertThat(homeViewModel._foecastLiveData.value).isEqualTo(Response.success(expectedResp).body())
+        assertThat(homeViewModel._forecastLiveData.value).isEqualTo(Response.success(expectedResp).body())
     }
 }
