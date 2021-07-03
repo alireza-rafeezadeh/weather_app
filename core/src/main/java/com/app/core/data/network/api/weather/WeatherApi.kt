@@ -1,4 +1,4 @@
-package com.app.core.data.network.api
+package com.app.core.data.network.api.weather
 
 import com.app.core.domain.ForecastResponse
 import retrofit2.Response

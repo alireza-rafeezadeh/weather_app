@@ -7,5 +7,5 @@ package com.app.core.data.datasource
  **/
 
 interface HomeDataSource {
-    fun forecast()
+    suspend fun forecast()
 }
