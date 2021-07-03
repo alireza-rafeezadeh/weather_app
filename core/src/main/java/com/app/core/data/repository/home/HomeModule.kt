@@ -1,7 +1,5 @@
-package com.app.core.data.repository
+package com.app.core.data.repository.home
 
-import com.app.core.data.repository.HomeRepository
-import com.app.core.data.repository.HomeRepositoryImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,5 +13,5 @@ abstract class HomeModule {
 
     @Singleton
     @Binds
-    abstract fun provideHomeRepository(repository : HomeRepositoryImp) : HomeRepository
+    abstract fun provideHomeRepository(repository : HomeRepositoryImpl) : HomeRepository
 }

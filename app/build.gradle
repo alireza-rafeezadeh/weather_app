@@ -78,10 +78,6 @@ dependencies {
     testImplementation 'com.google.truth:truth:1.1'
 
 
-    // coroutines:
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-
     //testing coroutines
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
