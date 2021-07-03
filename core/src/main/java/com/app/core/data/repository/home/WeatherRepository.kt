@@ -4,6 +4,6 @@ import com.app.core.domain.ForecastResponse
 import retrofit2.Response
 
 
-interface HomeRepository {
+interface WeatherRepository {
     fun forecast() : Response<ForecastResponse>
 }

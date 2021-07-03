@@ -13,5 +13,5 @@ abstract class HomeModule {
 
     @Singleton
     @Binds
-    abstract fun provideHomeRepository(repository : HomeRepositoryImpl) : HomeRepository
+    abstract fun provideHomeRepository(repository : WeatherRepositoryImpl) : WeatherRepository
 }
