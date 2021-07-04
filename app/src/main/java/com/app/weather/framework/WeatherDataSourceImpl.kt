@@ -10,5 +10,7 @@ import javax.inject.Inject
 class WeatherDataSourceImpl @Inject constructor(private val weatherApi: WeatherApi) : WeatherDataSource{
     override suspend fun forecast() : Response<ForecastResponse> {
 //        weatherApi.forecast("","","",1)
+
+        return Response.success(null)
     }
 }
