@@ -1,15 +1,16 @@
 package com.app.weather.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.*
 import com.app.core.interactor.weather.ForecastInteractor
 import com.app.core.interactor.weather.WeatherInteractors
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import retrofit2.Response
 
 @ExperimentalCoroutinesApi
 class WeatherViewModelTest {
@@ -28,7 +29,7 @@ class WeatherViewModelTest {
     }
 
     @Test
-    fun forecast() {
+    fun forecast() = runBlocking {
         weatherViewModel.forecast()
 
         val current = Current(
@@ -43,6 +44,8 @@ class WeatherViewModelTest {
 
         val expectedResp = ForecastResponse(current, Forecast(emptyList()), location)
 
-        assertThat(weatherViewModel._forecastLiveData.value).isEqualTo(Response.success(expectedResp).body())
+//        ResultWrapper.Success(expectedResp)
+        assertThat(weatherViewModel._forecastLiveData.value)
+            .isEqualTo(ResultWrapper.Success(expectedResp))
     }
 }
