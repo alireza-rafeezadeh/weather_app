@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/current_temperature_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="103dp"
+        android:layout_height="95dp"
         android:layout_marginTop="44dp"
         android:fontFamily="@font/calibri"
         android:textColor="@color/dove_gray"
@@ -391,4 +391,14 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/humidity_2_text_view"
         app:layout_constraintTop_toTopOf="@+id/temp_3_text_view" />
+
+    <ImageView
+        android:id="@+id/current_condition_image_view"
+        android:layout_width="41dp"
+        android:layout_height="38dp"
+        app:layout_constraintBottom_toTopOf="@+id/current_temperature_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/current_temperature_text_view"
+        app:layout_constraintStart_toStartOf="@+id/current_temperature_text_view" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
