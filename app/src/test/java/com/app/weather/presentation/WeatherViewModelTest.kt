@@ -1,7 +1,6 @@
 package com.app.weather.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.core.MainCoroutineRule
 import com.app.core.domain.*
 import com.app.core.interactor.weather.ForecastInteractor
 import com.app.core.interactor.weather.WeatherInteractors
@@ -19,7 +18,7 @@ class WeatherViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    var mainCoroutineRule = AppCoroutineRule()
 
     lateinit var weatherViewModel: WeatherViewModel
 
