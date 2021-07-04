@@ -1,6 +1,6 @@
 package com.app.weather.framework
 
-import com.app.core.data.datasource.HomeDataSource
+import com.app.core.data.datasource.WeatherDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,9 +10,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class HomeDataSourceModule {
+abstract class WeatherDataSourceModule {
 
     @Singleton
     @Binds
-    abstract fun provideHomeDataSource(dataSource : HomeDataSourceImpl) : HomeDataSource
+    abstract fun provideWeatherDataSource(dataSource : WeatherDataSourceImpl) : WeatherDataSource
 }

@@ -1,4 +1,4 @@
-package com.app.weather.presentation
+package com.app.core
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +16,8 @@ import org.junit.runner.Description
  **/
 
 @ExperimentalCoroutinesApi
-class AppCoroutineRule(private val dispatcher: CoroutineDispatcher = TestCoroutineDispatcher())
+class MainCoroutineRule(private val dispatcher: CoroutineDispatcher = TestCoroutineDispatcher())
     : TestWatcher() , TestCoroutineScope by TestCoroutineScope(dispatcher) {
-
 
     override fun starting(description: Description?) {
         super.starting(description)
@@ -30,5 +29,4 @@ class AppCoroutineRule(private val dispatcher: CoroutineDispatcher = TestCorouti
         cleanupTestCoroutines()
         Dispatchers.resetMain()
     }
-
 }
