@@ -24,12 +24,9 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
     var forecastData : LiveData<ForecastResponse> = _forecastData
 
 
-    init {
-//        forecast()
-    }
 
-    fun forecast() = viewModelScope.launch {
-        val resp = interactor.forecastInteractor.forecast()
+    fun forecast(latLong: String) = viewModelScope.launch {
+        val resp = interactor.forecastInteractor.forecast(latLong)
         resp.collect {
             _forecastLiveData.postValue(it)
 

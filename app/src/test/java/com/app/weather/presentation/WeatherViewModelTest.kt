@@ -30,7 +30,7 @@ class WeatherViewModelTest {
 
     @Test
     fun forecast()  {
-        weatherViewModel.forecast()
+        weatherViewModel.forecast(location.getLatLong())
 
         val current = Current(
             1, Condition(0,"",""), 1.0, 1.0, 1.0,
