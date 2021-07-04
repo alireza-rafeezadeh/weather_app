@@ -5,6 +5,7 @@ import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.*
 import com.app.core.interactor.weather.ForecastInteractor
 import com.app.core.interactor.weather.WeatherInteractors
+import com.app.weather.presentation.weather.WeatherViewModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before

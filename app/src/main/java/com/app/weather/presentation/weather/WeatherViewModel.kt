@@ -1,4 +1,4 @@
-package com.app.weather.presentation
+package com.app.weather.presentation.weather
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -17,8 +17,12 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) : ViewModel() {
 
-    var _forecastLiveData = MutableLiveData<ResultWrapper<ForecastResponse>>()
+    private var _forecastLiveData = MutableLiveData<ResultWrapper<ForecastResponse>>()
     val forecastLiveData : LiveData<ResultWrapper<ForecastResponse>> = _forecastLiveData
+
+    private var _forecastData = MutableLiveData<ForecastResponse>()
+    var forecastData : LiveData<ForecastResponse> = _forecastData
+
 
     init {
 //        forecast()
@@ -29,9 +33,9 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
         resp.collect {
             _forecastLiveData.postValue(it)
 
-            if (it is ResultWrapper.Success) {
-                it.data
-            }
+//            if (it is ResultWrapper.Success) {
+//                _forecastData.postValue(it.data)
+//            }
 
             Log.i("forcast_res_tag", "forecast: resp" + it)
         }
