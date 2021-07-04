@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.ForecastResponse
+import com.app.core.domain.Hour
 import com.app.weather.R
 import com.app.weather.databinding.FragmentWeatherBinding
 import com.app.weather.presentation.util.viewBinding
@@ -34,6 +35,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
                 is ResultWrapper.Success -> {
                     initSectionToday(it.data)
                     initSectionForecast(it.data)
+                    initRecyclerView(it.data.forecast.forecastday[0].hour)
                 }
                 is ResultWrapper.Error -> {
 
@@ -43,6 +45,11 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
                 }
             }
         }
+    }
+
+    private fun initRecyclerView(hours: List<Hour>) {
+        val adapter = HourlyForecastRVAdapter(hours)
+        binding.hourlyForecastRecyclerView.adapter = adapter
     }
 
 
