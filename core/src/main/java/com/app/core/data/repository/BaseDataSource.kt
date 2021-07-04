@@ -18,10 +18,12 @@ open class BaseDataSource {
 
 //                    response.body()
 
-                    response.body()?.let { ResultWrapper.Success(it) }
+                    response.body()?.let {
+                        emit(ResultWrapper.Success(it))
+                    }
                 } else {
                     if (response.code() == 400) {
-                        val sf = ResultWrapper.ErrorString(response.message())
+                        emit(ResultWrapper.ErrorString(response.message()))
                     }
                 }
 

@@ -1,5 +1,6 @@
 package com.app.weather.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,13 +21,19 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
     val forecastLiveData : LiveData<ResultWrapper<ForecastResponse>> = _forecastLiveData
 
     init {
-        forecast()
+//        forecast()
     }
 
     fun forecast() = viewModelScope.launch {
         val resp = interactor.forecastInteractor.forecast()
         resp.collect {
             _forecastLiveData.postValue(it)
+
+            if (it is ResultWrapper.Success) {
+                it.data
+            }
+
+            Log.i("forcast_res_tag", "forecast: resp" + it)
         }
     }
 }

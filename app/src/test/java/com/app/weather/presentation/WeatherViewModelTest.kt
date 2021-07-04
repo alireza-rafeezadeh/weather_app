@@ -7,7 +7,6 @@ import com.app.core.interactor.weather.ForecastInteractor
 import com.app.core.interactor.weather.WeatherInteractors
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,7 +28,7 @@ class WeatherViewModelTest {
     }
 
     @Test
-    fun forecast() = runBlocking {
+    fun forecast()  {
         weatherViewModel.forecast()
 
         val current = Current(

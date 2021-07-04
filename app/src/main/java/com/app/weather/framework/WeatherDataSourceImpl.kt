@@ -6,7 +6,6 @@ import com.app.core.data.repository.BaseDataSource
 import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.ForecastResponse
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -16,7 +15,7 @@ class WeatherDataSourceImpl @Inject constructor(private val weatherApi: WeatherA
     override suspend fun forecast() : Flow<ResultWrapper<ForecastResponse>> {
 //        weatherApi.forecast("","","",1)
         return flowOnIO {
-            weatherApi.forecast("","","",14)
+            weatherApi.forecast("d9634b89467748b8b4261455210107","Tehran","no",14)
         }
 
     }
