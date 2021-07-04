@@ -9,7 +9,7 @@ import retrofit2.Response
  */
 
 class FakeWeatherRepository : WeatherRepository {
-    override fun forecast(): Response<ForecastResponse> {
+    override suspend fun forecast(): Response<ForecastResponse> {
 
         val current = Current(
             1, Condition(0,"",""), 1.0, 1.0, 1.0,

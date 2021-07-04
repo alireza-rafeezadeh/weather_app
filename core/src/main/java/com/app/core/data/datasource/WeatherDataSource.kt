@@ -1,9 +1,10 @@
 package com.app.core.data.datasource
 
 import com.app.core.domain.ForecastResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 
 interface WeatherDataSource {
-    suspend fun forecast() : Response<ForecastResponse>
+    suspend fun forecast() : Flow<ForecastResponse>
 }

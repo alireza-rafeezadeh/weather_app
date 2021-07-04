@@ -15,8 +15,11 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
     var _forecastLiveData = MutableLiveData<ForecastResponse>()
     val forecastLiveData : LiveData<ForecastResponse> = _forecastLiveData
 
+    init {
+        forecast()
+    }
 
     fun forecast() {
-
+//        interactor.forecastInteractor.forecast()
     }
 }

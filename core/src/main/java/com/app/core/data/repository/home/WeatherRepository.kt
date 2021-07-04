@@ -5,5 +5,5 @@ import retrofit2.Response
 
 
 interface WeatherRepository {
-    fun forecast() : Response<ForecastResponse>
+    suspend fun forecast() : Response<ForecastResponse>
 }
