@@ -15,7 +15,7 @@ class WeatherDataSourceImpl @Inject constructor(private val weatherApi: WeatherA
     override suspend fun forecast(latLong : String) : Flow<ResultWrapper<ForecastResponse>> {
 //        weatherApi.forecast("","","",1)
         return flowOnIO {
-            weatherApi.forecast("d9634b89467748b8b4261455210107",latLong,"no",5)
+            weatherApi.forecast("d9634b89467748b8b4261455210107",latLong,"no",6)
         }
 
     }

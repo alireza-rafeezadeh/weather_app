@@ -155,21 +155,23 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     }
 
     private fun initSectionForecast(data: ForecastResponse) {
-        binding.day1TextView.text = data.forecast.forecastday[1].date
-        binding.temp1TextView.text = "${data.forecast.forecastday[1].day.avgtemp_c} C"
-        binding.humidity1TextView.text = "${data.forecast.forecastday[1].day.avghumidity} C"
-        Glide.with(this).load(data.forecast.forecastday[1].day.condition.icon.getURL())
+//        binding.day1TextView.text = data.forecast.forecastday[0].date
+        binding.temp1TextView.text = "${data.forecast.forecastday[0].day.avgtemp_c} C"
+        binding.humidity1TextView.text = "${data.forecast.forecastday[0].day.avghumidity} C"
+        Glide.with(this).load(data.forecast.forecastday[0].day.condition.icon.getURL())
             .into(binding.weathIc1ImageView)
 
-        binding.day2TextView.text = data.forecast.forecastday[2].date
-        binding.temp2TextView.text = "${data.forecast.forecastday[2].day.avgtemp_c} C"
-        binding.humidity2TextView.text = "${data.forecast.forecastday[2].day.avghumidity} C"
-        Glide.with(this).load(data.forecast.forecastday[2].day.condition.icon.getURL())
+//        binding.day2TextView.text = data.forecast.forecastday[1].date
+        binding.temp2TextView.text = "${data.forecast.forecastday[1].day.avgtemp_c} C"
+        binding.humidity2TextView.text = "${data.forecast.forecastday[1].day.avghumidity} C"
+        Glide.with(this).load(data.forecast.forecastday[1].day.condition.icon.getURL())
             .into(binding.weathIc2ImageView)
 
-//        binding.day3TextView.text = data.forecast.forecastday[3].date
-//        binding.temp3TextView.text = "${data.forecast.forecastday[3].day.avgtemp_c} C"
-//        binding.humidity3TextView.text = "${data.forecast.forecastday[3].day.avghumidity} C"
+        binding.day3TextView.text = data.forecast.forecastday[2].date
+        binding.temp3TextView.text = "${data.forecast.forecastday[2].day.avgtemp_c} C"
+        binding.humidity3TextView.text = "${data.forecast.forecastday[2].day.avghumidity} C"
+        Glide.with(this).load(data.forecast.forecastday[2].day.condition.icon.getURL())
+            .into(binding.weathIc3ImageView)
 
 //        binding.day2TextView.text = data.forecast.forecastday[0].date
 
