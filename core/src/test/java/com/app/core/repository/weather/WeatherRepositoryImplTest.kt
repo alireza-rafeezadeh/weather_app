@@ -5,15 +5,13 @@ import com.app.core.MainCoroutineRule
 import com.app.core.data.repository.ResultWrapper
 import com.app.core.data.repository.home.WeatherRepositoryImpl
 import com.app.core.domain.*
-
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.runBlocking
-import retrofit2.Response
 
 
 @ExperimentalCoroutinesApi
@@ -34,7 +32,7 @@ class WeatherRepositoryImplTest {
 
     @Test
     fun forecast() = runBlocking {
-        val response = weatherRepository.forecast()
+        val response = weatherRepository.forecast("")
         val expectedResp = forecastFakeResponse()
 
         response.collect {

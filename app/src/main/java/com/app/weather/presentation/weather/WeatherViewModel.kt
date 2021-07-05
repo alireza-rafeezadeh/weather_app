@@ -1,6 +1,5 @@
 package com.app.weather.presentation.weather
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,12 +23,9 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
     var forecastData : LiveData<ForecastResponse> = _forecastData
 
 
-    init {
-//        forecast()
-    }
 
-    fun forecast() = viewModelScope.launch {
-        val resp = interactor.forecastInteractor.forecast()
+    fun forecast(latLong: String) = viewModelScope.launch {
+        val resp = interactor.forecastInteractor.forecast(latLong)
         resp.collect {
             _forecastLiveData.postValue(it)
 
@@ -37,7 +33,7 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
 //                _forecastData.postValue(it.data)
 //            }
 
-            Log.i("forcast_res_tag", "forecast: resp" + it)
+//            Log.i("forcast_res_tag", "forecast: resp" + it)
         }
     }
 }

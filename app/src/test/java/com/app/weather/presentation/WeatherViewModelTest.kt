@@ -29,8 +29,8 @@ class WeatherViewModelTest {
     }
 
     @Test
-    fun forecast()  {
-        weatherViewModel.forecast()
+    fun forecast() {
+        weatherViewModel.forecast("")
 
         val current = Current(
             1, Condition(0,"",""), 1.0, 1.0, 1.0,
@@ -45,7 +45,7 @@ class WeatherViewModelTest {
         val expectedResp = ForecastResponse(current, Forecast(emptyList()), location)
 
 //        ResultWrapper.Success(expectedResp)
-        assertThat(weatherViewModel._forecastLiveData.value)
+        assertThat(weatherViewModel.forecastLiveData.value)
             .isEqualTo(ResultWrapper.Success(expectedResp))
     }
 }

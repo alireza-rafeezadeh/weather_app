@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 
 class WeatherRepositoryImpl @Inject constructor(private val weatherDataSource: WeatherDataSource) : WeatherRepository {
-    override suspend fun forecast(): Flow<ResultWrapper<ForecastResponse>> {
-        return weatherDataSource.forecast()
+    override suspend fun forecast(latLong: String): Flow<ResultWrapper<ForecastResponse>> {
+        return weatherDataSource.forecast(latLong)
     }
 }

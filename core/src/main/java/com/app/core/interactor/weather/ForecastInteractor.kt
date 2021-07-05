@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 
 class ForecastInteractor @Inject constructor(private val repository: WeatherRepository) {
-    suspend fun forecast() = repository.forecast()
+    suspend fun forecast(latLong: String) = repository.forecast(latLong)
 }
