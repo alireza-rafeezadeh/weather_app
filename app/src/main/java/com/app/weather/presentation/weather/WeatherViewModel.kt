@@ -1,6 +1,5 @@
 package com.app.weather.presentation.weather
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,7 +33,7 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
 //                _forecastData.postValue(it.data)
 //            }
 
-            Log.i("forcast_res_tag", "forecast: resp" + it)
+//            Log.i("forcast_res_tag", "forecast: resp" + it)
         }
     }
 }
