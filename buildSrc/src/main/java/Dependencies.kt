@@ -3,6 +3,8 @@ val retrofit_version = "2.9.0"
 val hilt_version = "2.35"
 val coroutines_version = "1.3.9"
 val arch_version = "2.1.0"
+val lifecycle_version = "2.2.0"
+val nav_version = "2.3.2"
 
 
 object KotlinDependencies {
@@ -23,7 +25,9 @@ object AndroidXDependencies {
     val appcompat = "androidx.appcompat:appcompat:1.3.0"
     val material = "com.google.android.material:material:1.3.0"
 
+    val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
 
+    val location_services = "com.google.android.gms:play-services-location:18.0.0"
 }
 
 object TestDependencies {
@@ -34,7 +38,9 @@ object TestDependencies {
 
     val androidx_truth = "androidx.test.ext:truth:1.3.0"
     val google_truth = "com.google.truth:truth:1.1"
+    val android_test_runner =  "com.android.support.test:runner:1.0.2"
 
+    val navigation_testing = "androidx.navigation:navigation-testing:$nav_version"
 
 }
 
@@ -61,5 +67,30 @@ object DataDependencies {
 object JetpackDependencies {
     val hilt_android = "com.google.dagger:hilt-android:$hilt_version"
     val hilt_compiler = "com.google.dagger:hilt-compiler:$hilt_version"
+
+    val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    val livedata =  "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    val viewmodel_saved_state = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+    val lifecycle_compiler =  "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    val lifecycle_compiler_java_8 =  "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    val hilt_tesiting = "com.google.dagger:hilt-android-testing:2.35"
+    val hilt_android_compiler = "com.google.dagger:hilt-android-compiler:2.35"
+
+
+
+
+    val navigaiton_fragment = "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    val navigaiton_ui = "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+
+
+}
+
+object GlideDependencies {
+    val glide =  "com.github.bumptech.glide:glide:4.12.0"
+    val glide_compiler = "com.github.bumptech.glide:compiler:4.12.0"
 
 }

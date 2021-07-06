@@ -40,65 +40,113 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "com.android.support.test:runner:1.0.2"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation(KotlinDependencies.kotlin_stdlib)
 
-    //Hilt
-    implementation "com.google.dagger:hilt-android:2.35"
-    kapt "com.google.dagger:hilt-compiler:2.35"
+//    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation(AndroidXDependencies.core_ktx)
+
+//    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation(AndroidXDependencies.appcompat)
+
+//    implementation 'com.google.android.material:material:1.3.0'
+    implementation(AndroidXDependencies.material)
+
+
+
+
+
+    // --->
+//    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation(AndroidXDependencies.constraintlayout)
+
+//    testImplementation 'junit:junit:4.+'
+    testImplementation(TestDependencies.jUnit)
+
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation(AndroidTestDependencies.androidx_test_ext_jUnit)
+
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation(AndroidTestDependencies.espresso_core)
+
+//    androidTestImplementation "com.android.support.test:runner:1.0.2"
+    androidTestImplementation(TestDependencies.android_test_runner)
+
+
+//    api("com.google.dagger:hilt-android:$hilt_version")
+    api(JetpackDependencies.hilt_android)
+//    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    kapt(JetpackDependencies.hilt_compiler)
 
     //lifecycle
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation(JetpackDependencies.viewmodel)
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+//    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation(JetpackDependencies.livedata)
     // Saved state module for ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    implementation(JetpackDependencies.viewmodel_saved_state)
 
     // Annotation processor
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+//    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    kapt(JetpackDependencies.lifecycle_compiler)
     // alternately - if using Java8, use the following instead of lifecycle-compiler
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+//    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation(JetpackDependencies.lifecycle_compiler_java_8)
 
 
     // Test
     // optional - Test helpers for LiveData
-    testImplementation "androidx.arch.core:core-testing:$arch_version"
+//    testImplementation "androidx.arch.core:core-testing:$arch_version"
+    testImplementation(TestDependencies.androidx_core_testing)
+
 
     // For instrumented tests.
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.35'
+//    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.35'
+    androidTestImplementation(JetpackDependencies.hilt_tesiting)
     // ...with Kotlin.
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.35'
+//    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.35'
+    kaptAndroidTest(JetpackDependencies.hilt_android_compiler)
 
-    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
-    androidTestImplementation 'com.google.truth:truth:1.1'
-    testImplementation 'androidx.test.ext:truth:1.3.0'
-    testImplementation 'com.google.truth:truth:1.1'
+
+//    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
+    androidTestImplementation(TestDependencies.androidx_truth)
+//    androidTestImplementation 'com.google.truth:truth:1.1'
+    androidTestImplementation(TestDependencies.google_truth)
+//    testImplementation 'androidx.test.ext:truth:1.3.0'
+    testImplementation(TestDependencies.androidx_truth)
+//    testImplementation 'com.google.truth:truth:1.1'
+    testImplementation(TestDependencies.google_truth)
 
 
     //testing coroutines
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+//    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    testImplementation(KotlinDependencies.coroutines_test)
+
 //    testA "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
 
     //Navigation
     // Testing Navigation
-    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+//    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    androidTestImplementation(TestDependencies.navigation_testing)
+
+//    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation(JetpackDependencies.navigaiton_fragment)
+
+//    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation(JetpackDependencies.navigaiton_ui)
 
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+//    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation(GlideDependencies.glide)
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    annotationProcessor(GlideDependencies.glide_compiler)
 
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
+//    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation(AndroidXDependencies.location_services)
 
 }
