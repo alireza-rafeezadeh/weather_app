@@ -15,7 +15,9 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.app.weather.AppTestRunner"
+
     }
 
     buildTypes {
@@ -65,7 +67,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
 
-
     // Test
     // optional - Test helpers for LiveData
     testImplementation "androidx.arch.core:core-testing:$arch_version"
@@ -81,18 +82,16 @@ dependencies {
     testImplementation 'com.google.truth:truth:1.1'
 
 
-
     //testing coroutines
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 //    testA "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
 
-
     //Navigation
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
-    implementation( "androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation( "androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
 
     //glide
