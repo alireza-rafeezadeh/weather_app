@@ -23,9 +23,9 @@ import dagger.hilt.android.testing.HiltTestApplication
 
 @Suppress("unused")
 class AppTestRunner : AndroidJUnitRunner() {
-  override fun newApplication(
-    cl: ClassLoader?,
-    className: String?,
-    context: Context?
-  ): Application = super.newApplication(cl, HiltTestApplication::class.java.name, context)
+    override fun newApplication(
+        cl: ClassLoader?,
+        className: String?,
+        context: Context?
+    ): Application = super.newApplication(cl, HiltTestApplication::class.java.name, context)
 }

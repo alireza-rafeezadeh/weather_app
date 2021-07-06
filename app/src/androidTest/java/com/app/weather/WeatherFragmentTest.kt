@@ -2,7 +2,9 @@ package com.app.weather
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.app.weather.presentation.weather.WeatherFragment
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -20,8 +22,6 @@ class WeatherFragmentTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
-
-
 
     @Before
     fun setUp() {
@@ -103,7 +103,6 @@ class WeatherFragmentTest {
         onView(withId(R.id.day_1_text_view)).check(matches(withText("Today")))
         onView(withId(R.id.day_2_text_view)).check(matches(withText("Tomorrow")))
         onView(withId(R.id.day_3_text_view)).check(matches(withText("")))
-
     }
 
 //    @Test
@@ -115,5 +114,4 @@ class WeatherFragmentTest {
 //        }
 //
 //    }
-
 }

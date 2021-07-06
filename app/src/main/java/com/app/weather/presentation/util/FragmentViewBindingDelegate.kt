@@ -1,7 +1,5 @@
 package com.app.weather.presentation.util
 
-
-
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -55,4 +53,3 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
         return viewBindingFactory(thisRef.requireView()).also { this.binding = it }
     }
 }
-

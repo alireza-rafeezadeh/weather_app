@@ -10,7 +10,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-
 @ExperimentalCoroutinesApi
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
@@ -23,7 +22,7 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
             ApplicationProvider.getApplicationContext(),
             HiltTestActivity::class.java
         )
-    ).putExtra( "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY",themeResId)
+    ).putExtra("androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY", themeResId)
 
     ActivityScenario.launch<HiltTestActivity>(mainActivityIntent).onActivity { activity ->
         fragmentFactory?.let {
@@ -41,11 +40,7 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
 
         (fragment as T).action()
     }
-
 }
-
-
-
 
 /**
  * launchFragmentInContainer from the androidx.fragment:fragment-testing library
@@ -56,11 +51,11 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
  * [HiltTestActivity] in the debug folder and include it in the debug AndroidManifest.xml file
  * as can be found in this project.
  */
-//inline fun <reified T : Fragment> launchFragmentInHiltContainer(
+// inline fun <reified T : Fragment> launchFragmentInHiltContainer(
 //    fragmentArgs: Bundle? = null,
 //    @StyleRes themeResId: Int = R.style.Theme_AppCompat_DayNight_NoActionBar,
 //    crossinline action: Fragment.() -> Unit = {}
-//) {
+// ) {
 //    val startActivityIntent = Intent.makeMainActivity(
 //        ComponentName(
 //            ApplicationProvider.getApplicationContext(),
@@ -81,4 +76,4 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
 //
 //        fragment.action()
 //    }
-//}
+// }
