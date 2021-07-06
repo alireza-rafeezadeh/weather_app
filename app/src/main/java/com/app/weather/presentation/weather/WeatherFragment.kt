@@ -30,8 +30,9 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     private val weatherViewModel: WeatherViewModel by viewModels()
 
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    var shouldAskForLocationPermission = true
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,7 +64,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            ) == PackageManager.PERMISSION_GRANTED && shouldAskForLocationPermission -> {
                 // You can use the API that requires the permission.
                 getLatLong()
             }
