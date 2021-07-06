@@ -78,3 +78,5 @@ dependencies {
     androidTestImplementation(TestDependencies.navigation_testing)
     kaptAndroidTest(JetpackDependencies.hilt_android_compiler)
 }
+
+apply from: "../ktlint.gradle"
