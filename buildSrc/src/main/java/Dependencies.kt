@@ -14,7 +14,6 @@ object KotlinDependencies {
     val coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     val coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-    val coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
 }
 
@@ -42,13 +41,11 @@ object TestDependencies {
 
     val navigation_testing = "androidx.navigation:navigation-testing:$nav_version"
 
-}
-
-object AndroidTestDependencies {
+    val coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
     val androidx_test_ext_jUnit = "androidx.test.ext:junit:1.1.3"
     val espresso_core = "androidx.test.espresso:espresso-core:3.4.0"
-
+    val hilt_tesiting = "com.google.dagger:hilt-android-testing:2.35"
 
 }
 
@@ -76,7 +73,6 @@ object JetpackDependencies {
 
     val lifecycle_compiler_java_8 =  "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    val hilt_tesiting = "com.google.dagger:hilt-android-testing:2.35"
     val hilt_android_compiler = "com.google.dagger:hilt-android-compiler:2.35"
 
 

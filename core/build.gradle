@@ -35,63 +35,29 @@ android {
 }
 
 dependencies {
-
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation(KotlinDependencies.kotlin_stdlib)
-//    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation(AndroidXDependencies.core_ktx)
-//    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation(AndroidXDependencies.appcompat)
-//    implementation 'com.google.android.material:material:1.3.0'
-    implementation(AndroidXDependencies.material)
-
-//    testImplementation 'junit:junit:4.+'
-    testImplementation(TestDependencies.jUnit)
-
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation(AndroidTestDependencies.androidx_test_ext_jUnit)
-
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation(AndroidTestDependencies.espresso_core)
-
-
-
-//    api("com.squareup.retrofit2:retrofit:2.9.0")
-    api(DataDependencies.retrofit)
-
-//    api("com.squareup.moshi:moshi-kotlin:1.11.0")
-    api(DataDependencies.moshi)
-
-//    api("com.squareup.retrofit2:converter-moshi:2.9.0")
-    api(DataDependencies.moshi_converter)
-
-
-//    api("com.google.dagger:hilt-android:$hilt_version")
-    api(JetpackDependencies.hilt_android)
-//    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    kapt(JetpackDependencies.hilt_compiler)
-
-    // coroutines:
-//    api( "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     api(KotlinDependencies.coroutines_core)
-//    api( "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
     api(KotlinDependencies.coroutines_android)
 
-    //testing coroutines
-//    testApi("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version")
-    testApi(KotlinDependencies.coroutines_test)
+    implementation(AndroidXDependencies.core_ktx)
+    implementation(AndroidXDependencies.appcompat)
+    implementation(AndroidXDependencies.material)
 
-    
-//    testImplementation "androidx.arch.core:core-testing:$arch_version"
+    api(DataDependencies.retrofit)
+    api(DataDependencies.moshi)
+    api(DataDependencies.moshi_converter)
+
+    api(JetpackDependencies.hilt_android)
+    kapt(JetpackDependencies.hilt_compiler)
+
+    testImplementation(TestDependencies.jUnit)
+    testApi(TestDependencies.coroutines_test)
     testImplementation(TestDependencies.androidx_core_testing)
-
-
-//    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
-    androidTestImplementation(TestDependencies.androidx_truth)
-//    androidTestImplementation 'com.google.truth:truth:1.1'
-    androidTestImplementation(TestDependencies.google_truth)
-//    testImplementation 'androidx.test.ext:truth:1.3.0'
     testImplementation(TestDependencies.androidx_truth)
-//    testImplementation 'com.google.truth:truth:1.1'
     testImplementation(TestDependencies.google_truth)
+
+    androidTestImplementation(TestDependencies.androidx_test_ext_jUnit)
+    androidTestImplementation(TestDependencies.espresso_core)
+    androidTestImplementation(TestDependencies.androidx_truth)
+    androidTestImplementation(TestDependencies.google_truth)
 }
