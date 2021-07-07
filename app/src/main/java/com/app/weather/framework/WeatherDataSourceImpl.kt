@@ -5,9 +5,8 @@ import com.app.core.data.network.api.weather.WeatherApi
 import com.app.core.data.repository.BaseDataSource
 import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.ForecastResponse
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-
+import kotlinx.coroutines.flow.Flow
 
 class WeatherDataSourceImpl @Inject constructor(private val weatherApi: WeatherApi) :
     BaseDataSource(), WeatherDataSource {
@@ -17,7 +16,5 @@ class WeatherDataSourceImpl @Inject constructor(private val weatherApi: WeatherA
         return flowOnIO {
             weatherApi.forecast("d9634b89467748b8b4261455210107", latLong, "no", 6)
         }
-
     }
-
 }

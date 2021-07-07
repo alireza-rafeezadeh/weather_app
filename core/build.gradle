@@ -15,6 +15,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -34,40 +35,29 @@ android {
 }
 
 dependencies {
+    implementation(KotlinDependencies.kotlin_stdlib)
+    api(KotlinDependencies.coroutines_core)
+    api(KotlinDependencies.coroutines_android)
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation(AndroidXDependencies.core_ktx)
+    implementation(AndroidXDependencies.appcompat)
+    implementation(AndroidXDependencies.material)
 
-    api("com.squareup.retrofit2:retrofit:2.9.0")
+    api(DataDependencies.retrofit)
+    api(DataDependencies.moshi)
+    api(DataDependencies.moshi_converter)
 
-    api("com.squareup.moshi:moshi-kotlin:1.11.0")
-    api("com.squareup.retrofit2:converter-moshi:2.9.0")
+    api(JetpackDependencies.hilt_android)
+    kapt(JetpackDependencies.hilt_compiler)
 
-    api("com.google.dagger:hilt-android:$hilt_version")
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    testImplementation(TestDependencies.jUnit)
+    testApi(TestDependencies.coroutines_test)
+    testImplementation(TestDependencies.androidx_core_testing)
+    testImplementation(TestDependencies.androidx_truth)
+    testImplementation(TestDependencies.google_truth)
 
-    // coroutines:
-    api( "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
-    api( "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
-
-    //testing coroutines
-    testApi("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version")
-
-    
-    testImplementation "androidx.arch.core:core-testing:$arch_version"
-
-//    androidTestImplementation 'androidx.test.ext:truth:1.4.0'
-//    androidTestImplementation 'com.google.truth:truth:1.1.2'
-//    testImplementation 'androidx.test.ext:truth:1.4.0'
-//    testImplementation 'com.google.truth:truth:1.1.2'
-
-    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
-    androidTestImplementation 'com.google.truth:truth:1.1'
-    testImplementation 'androidx.test.ext:truth:1.3.0'
-    testImplementation 'com.google.truth:truth:1.1'
+    androidTestImplementation(TestDependencies.androidx_test_ext_jUnit)
+    androidTestImplementation(TestDependencies.espresso_core)
+    androidTestImplementation(TestDependencies.androidx_truth)
+    androidTestImplementation(TestDependencies.google_truth)
 }

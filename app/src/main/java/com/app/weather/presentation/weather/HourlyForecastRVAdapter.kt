@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.core.domain.Hour
 import com.app.weather.databinding.ItemHourlyForecastBinding
 
-
-class HourlyForecastRVAdapter(val hours: List<Hour>)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HourlyForecastRVAdapter(val hours: List<Hour>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemHourlyForecastBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,8 +22,8 @@ class HourlyForecastRVAdapter(val hours: List<Hour>)
         return hours.size
     }
 
-    inner class ItemViewHolder(private val binding: ItemHourlyForecastBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(private val binding: ItemHourlyForecastBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bindView(hour: Hour) {
             with(binding) {
                 hourTextView.text = hour.time.substringAfter(" ")

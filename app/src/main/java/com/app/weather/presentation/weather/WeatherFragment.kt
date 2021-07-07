@@ -22,17 +22,15 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val weatherViewModel: WeatherViewModel by viewModels()
 
+    lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-
+    var shouldAskForLocationPermission = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,12 +56,11 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
                 }
             }
 
-
         when {
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            ) == PackageManager.PERMISSION_GRANTED && shouldAskForLocationPermission -> {
                 // You can use the API that requires the permission.
                 getLatLong()
             }
@@ -103,34 +100,29 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
             return
         }
         fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
+            .addOnSuccessListener { location: Location? ->
                 // Got last known location. In some rare situations this can be null.
                 Log.i("location_tag", "performAction: -> $location ")
-
 
                 Log.i("lat_long_tag", "${location?.latitude}/${location?.longitude}")
 
                 location?.getLatLong()?.let {
                     weatherViewModel.forecast(it)
                 }
-
             }
-
     }
 
     private fun observeInFragment() {
         weatherViewModel.forecastLiveData.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is ResultWrapper.Success -> {
                     initSectionToday(it.data)
                     initSectionForecast(it.data)
                     initRecyclerView(it.data.forecast.forecastday[0].hour)
                 }
                 is ResultWrapper.Error -> {
-
                 }
                 is ResultWrapper.InProgress -> {
-
                 }
             }
         }
@@ -140,7 +132,6 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         val adapter = HourlyForecastRVAdapter(hours)
         binding.hourlyForecastRecyclerView.adapter = adapter
     }
-
 
     private fun initSectionToday(data: ForecastResponse) {
         binding.currentTemperatureTextView.text = "${data.current.temp_c.toInt()}"
@@ -175,12 +166,9 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
 //        binding.day2TextView.text = data.forecast.forecastday[0].date
 
-
         Glide.with(this).load(data.current.condition.icon.getURL())
             .into(binding.currentConditionImageView)
     }
-
 }
-
 
 fun String.getURL() = "https://$this"
