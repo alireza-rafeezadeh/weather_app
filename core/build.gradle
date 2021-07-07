@@ -35,13 +35,13 @@ android {
 }
 
 dependencies {
-    implementation(KotlinDependencies.kotlin_stdlib)
+    api(KotlinDependencies.kotlin_stdlib)
     api(KotlinDependencies.coroutines_core)
     api(KotlinDependencies.coroutines_android)
 
-    implementation(AndroidXDependencies.core_ktx)
-    implementation(AndroidXDependencies.appcompat)
-    implementation(AndroidXDependencies.material)
+    api(AndroidXDependencies.core_ktx)
+    api(AndroidXDependencies.appcompat)
+    api(AndroidXDependencies.material)
 
     api(DataDependencies.retrofit)
     api(DataDependencies.moshi)

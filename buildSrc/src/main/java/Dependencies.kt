@@ -15,6 +15,13 @@ object KotlinDependencies {
     val coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 }
 
+object GradleDependencies {
+
+    val build_gradle = "com.android.tools.build:gradle:4.2.2"
+    val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    val hilt_android_gradle_plugin = "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+}
+
 object AndroidXDependencies {
 
     val core_ktx = "androidx.core:core-ktx:1.6.0"
