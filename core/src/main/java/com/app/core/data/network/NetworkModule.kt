@@ -10,17 +10,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-
 
     private val BASE_URL = "http://api.weatherapi.com/v1/"
 
     @Provides
     @Singleton
-    fun provideRetrofit(mosh: Moshi) : Retrofit {
+    fun provideRetrofit(mosh: Moshi): Retrofit {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(mosh))
@@ -28,7 +26,6 @@ class NetworkModule {
             .build()
         return retrofit
     }
-
 
     @Singleton
     @Provides

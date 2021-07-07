@@ -1,5 +1,7 @@
-package com.app.weather.presentation.weather
+package com.app.weather.presentation.di
 
+import com.app.weather.presentation.weather.LocationHelper
+import com.app.weather.presentation.weather.LocationHelperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

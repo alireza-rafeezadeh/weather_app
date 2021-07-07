@@ -5,7 +5,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
 interface WeatherApi {
 
     @GET("forecast.json")
@@ -15,6 +14,4 @@ interface WeatherApi {
         @Query("aqi") aqi: String,
         @Query("days") days: Int,
     ): Response<ForecastResponse>
-
-
 }

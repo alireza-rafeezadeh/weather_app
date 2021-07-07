@@ -84,5 +84,3 @@ class WeatherFragment(val locationHelper : LocationHelper): Fragment(R.layout.fr
             .into(binding.currentConditionImageView)
     }
 }
-
-fun String.getURL() = "https://$this"
