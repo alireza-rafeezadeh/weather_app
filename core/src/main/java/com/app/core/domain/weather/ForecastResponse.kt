@@ -1,4 +1,4 @@
-package com.app.core.domain
+package com.app.core.domain.weather
 
 
 data class ForecastResponse(

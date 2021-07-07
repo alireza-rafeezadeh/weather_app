@@ -1,4 +1,4 @@
-package com.app.weather.presentation.weather
+package com.app.weather.presentation.util.location
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -8,9 +8,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.app.weather.presentation.weather.getLatLong
 import com.google.android.gms.location.LocationServices
 import javax.inject.Inject
-
 
 class LocationHelperImpl @Inject constructor() : LocationHelper {
 
@@ -54,11 +54,9 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
         }
     }
 
-
      override fun getLatLong(fragment: Fragment, isGrantedAction: (latLong: String) -> Unit) {
         val fusedLocationClient =
             LocationServices.getFusedLocationProviderClient(fragment.requireActivity())
-
 
         if (ActivityCompat.checkSelfPermission(
                 fragment.requireContext(),

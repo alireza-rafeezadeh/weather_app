@@ -1,7 +1,8 @@
 package com.app.weather.presentation
 
-import com.app.core.data.repository.home.WeatherRepository
+import com.app.core.data.repository.weather.WeatherRepository
 import com.app.core.domain.*
+import com.app.core.domain.weather.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

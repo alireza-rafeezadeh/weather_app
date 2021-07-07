@@ -1,10 +1,10 @@
-package com.app.weather.framework
+package com.app.weather.framework.weather
 
-import com.app.core.data.datasource.WeatherDataSource
+import com.app.core.data.datasource.weather.WeatherDataSource
 import com.app.core.data.network.api.weather.WeatherApi
 import com.app.core.data.repository.BaseDataSource
-import com.app.core.domain.ForecastResponse
 import com.app.core.domain.ResultWrapper
+import com.app.core.domain.weather.ForecastResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.app.core.data.repository.home
+package com.app.core.data.repository.weather
 
 import dagger.Binds
 import dagger.Module
@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class HomeModule {
+abstract class WeatherModule {
 
     @Singleton
     @Binds

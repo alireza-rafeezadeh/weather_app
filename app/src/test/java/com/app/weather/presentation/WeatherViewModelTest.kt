@@ -2,9 +2,10 @@ package com.app.weather.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.app.core.domain.*
+import com.app.core.domain.weather.*
 import com.app.core.interactor.weather.ForecastInteractor
 import com.app.core.interactor.weather.WeatherInteractors
-import com.app.weather.presentation.weather.WeatherViewModel
+import com.app.weather.presentation.ui.weather.WeatherViewModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before

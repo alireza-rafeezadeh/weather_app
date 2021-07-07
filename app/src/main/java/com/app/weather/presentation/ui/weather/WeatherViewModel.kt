@@ -1,11 +1,11 @@
-package com.app.weather.presentation.weather
+package com.app.weather.presentation.ui.weather
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.core.domain.ForecastResponse
 import com.app.core.domain.ResultWrapper
+import com.app.core.domain.weather.ForecastResponse
 import com.app.core.interactor.weather.WeatherInteractors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect

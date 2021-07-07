@@ -5,7 +5,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.app.weather.presentation.di.AppFragmentFactory
-import com.app.weather.presentation.weather.WeatherFragment
+import com.app.weather.presentation.ui.weather.WeatherFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,9 +1,9 @@
 package com.app.weather
 
 import androidx.fragment.app.Fragment
-import com.app.weather.presentation.weather.LocationHelper
+import com.app.weather.presentation.util.location.LocationHelper
 
-class FakeLocationHelper constructor(): LocationHelper {
+class FakeLocationHelper : LocationHelper {
     override fun checkLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,

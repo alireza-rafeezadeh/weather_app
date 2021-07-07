@@ -2,8 +2,9 @@ package com.app.core.repository.weather
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.app.core.MainCoroutineRule
-import com.app.core.data.repository.home.WeatherRepositoryImpl
+import com.app.core.data.repository.weather.WeatherRepositoryImpl
 import com.app.core.domain.*
+import com.app.core.domain.weather.*
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect

@@ -5,4 +5,4 @@ import com.app.weather.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(R.layout.activity_home)
+class WeatherActivity : AppCompatActivity(R.layout.activity_weather)

@@ -1,7 +1,7 @@
-package com.app.core.data.datasource
+package com.app.core.data.datasource.weather
 
-import com.app.core.domain.ForecastResponse
 import com.app.core.domain.ResultWrapper
+import com.app.core.domain.weather.ForecastResponse
 import kotlinx.coroutines.flow.Flow
 
 interface WeatherDataSource {
