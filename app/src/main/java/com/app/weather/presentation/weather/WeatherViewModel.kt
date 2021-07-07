@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.ForecastResponse
+import com.app.core.domain.ResultWrapper
 import com.app.core.interactor.weather.WeatherInteractors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect

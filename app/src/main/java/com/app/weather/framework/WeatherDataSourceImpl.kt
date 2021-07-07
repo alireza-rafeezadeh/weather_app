@@ -3,8 +3,8 @@ package com.app.weather.framework
 import com.app.core.data.datasource.WeatherDataSource
 import com.app.core.data.network.api.weather.WeatherApi
 import com.app.core.data.repository.BaseDataSource
-import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.ForecastResponse
+import com.app.core.domain.ResultWrapper
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

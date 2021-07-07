@@ -1,5 +1,6 @@
 package com.app.core.data.repository
 
+import com.app.core.domain.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -24,12 +25,4 @@ open class BaseDataSource {
                 ResultWrapper.Success("Unknown Error occurred!")
             }
         }.flowOn(Dispatchers.IO)
-}
-
-
-sealed class ResultWrapper<out T : Any> {
-    data class Success<out T : Any>(val data: T) : ResultWrapper<T>()
-    data class Error(val exception : Exception) : ResultWrapper<Nothing>()
-    data class ErrorString(val exception : String) : ResultWrapper<Nothing>()
-    object InProgress : ResultWrapper<Nothing>()
 }

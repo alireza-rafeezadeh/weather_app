@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.ForecastResponse
 import com.app.core.domain.Hour
+import com.app.core.domain.ResultWrapper
 import com.app.weather.R
 import com.app.weather.databinding.FragmentWeatherBinding
 import com.app.weather.presentation.util.viewBinding
