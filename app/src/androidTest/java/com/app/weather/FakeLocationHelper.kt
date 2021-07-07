@@ -15,4 +15,8 @@ class FakeLocationHelper : LocationHelper {
     override fun getLatLong(fragment: Fragment, isGrantedAction: (latLong: String) -> Unit) {
 
     }
+
+    override fun hasLocationPermission(fragment: Fragment): Boolean {
+        return true
+    }
 }

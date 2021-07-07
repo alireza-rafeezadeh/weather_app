@@ -1,32 +1,65 @@
 package com.app.weather.presentation.ui.weather
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.app.core.domain.ResultWrapper
 import com.app.core.domain.weather.ForecastResponse
 import com.app.core.domain.weather.Hour
-import com.app.core.domain.ResultWrapper
 import com.app.weather.R
 import com.app.weather.databinding.FragmentWeatherBinding
-import com.app.weather.presentation.util.viewBinding
 import com.app.weather.presentation.util.location.LocationHelper
+import com.app.weather.presentation.util.viewBinding
 import com.app.weather.presentation.weather.getURL
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class WeatherFragment(val locationHelper : LocationHelper): Fragment(R.layout.fragment_weather) {
+class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fragment_weather) {
 
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val weatherViewModel: WeatherViewModel by viewModels()
+    private val REQUEST_CHECK_SETTINGS = 3324
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInFragment()
-        locationHelper.checkLocationPermission(this , {
+        getDefaultData()
+        askLocationPermission()
+
+
+
+//        val manager =
+//            getSystemService(requireContext(),LOCATION_SERVICE::class.java)
+//
+//        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            Toast.makeText(requireContext(), "gps is not enabled", Toast.LENGTH_SHORT).show()
+//        }
+
+
+//        getLocationDialog()
+    }
+
+    private fun getDefaultData() {
+        if (!locationHelper.hasLocationPermission(this)) {
+            weatherViewModel.forecast("New York")
+        }
+    }
+
+    private fun askLocationPermission() {
+        locationHelper.checkLocationPermission(this, {
             weatherViewModel.forecast(it)
-        }, { })
+        }, {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.location_permission_denied_message),
+                Toast.LENGTH_SHORT
+            ).show()
+        })
     }
 
     private fun observeInFragment() {
@@ -84,5 +117,14 @@ class WeatherFragment(val locationHelper : LocationHelper): Fragment(R.layout.fr
 
         Glide.with(this).load(data.current.condition.icon.getURL())
             .into(binding.currentConditionImageView)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            REQUEST_CHECK_SETTINGS -> {
+                askLocationPermission()
+            }
+        }
     }
 }
