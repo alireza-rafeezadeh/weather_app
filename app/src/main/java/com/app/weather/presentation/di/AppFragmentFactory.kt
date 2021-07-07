@@ -6,7 +6,6 @@ import com.app.weather.presentation.weather.LocationHelper
 import com.app.weather.presentation.weather.WeatherFragment
 import javax.inject.Inject
 
-
 class AppFragmentFactory @Inject constructor(private val locationHelper: LocationHelper) :
     FragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {

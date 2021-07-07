@@ -11,7 +11,6 @@ import com.app.weather.R
 import com.app.weather.databinding.FragmentWeatherBinding
 import com.app.weather.presentation.util.viewBinding
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,29 +19,12 @@ class WeatherFragment(val locationHelper : LocationHelper): Fragment(R.layout.fr
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val weatherViewModel: WeatherViewModel by viewModels()
 
-    lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    var shouldAskForLocationPermission = true
-
-
-//    @Inject
-//    lateinit var locationHelper : LocationHelper
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        weatherViewModel.forecast(location.getLatLong())
-
         observeInFragment()
-
-//        val locationHelper = LocationHelper()
-
         locationHelper.checkLocationPermission(this , {
             weatherViewModel.forecast(it)
-        }, {
-
-        })
+        }, { })
     }
 
     private fun observeInFragment() {
@@ -75,7 +57,6 @@ class WeatherFragment(val locationHelper : LocationHelper): Fragment(R.layout.fr
         binding.humidityTextView.text = data.current.humidity.toString()
         binding.cloudPercentageTextView.text = data.current.cloud.toString()
         binding.pressureTextView.text = data.current.pressure_in.toString()
-//        binding.sunRiseTextView.text = data.current.sun.toString()
     }
 
     private fun initSectionForecast(data: ForecastResponse) {

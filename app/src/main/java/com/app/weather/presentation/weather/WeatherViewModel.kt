@@ -8,9 +8,9 @@ import com.app.core.data.repository.ResultWrapper
 import com.app.core.domain.ForecastResponse
 import com.app.core.interactor.weather.WeatherInteractors
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) : ViewModel() {
@@ -18,19 +18,10 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
     private var _forecastLiveData = MutableLiveData<ResultWrapper<ForecastResponse>>()
     val forecastLiveData: LiveData<ResultWrapper<ForecastResponse>> = _forecastLiveData
 
-    private var _forecastData = MutableLiveData<ForecastResponse>()
-    var forecastData: LiveData<ForecastResponse> = _forecastData
-
     fun forecast(latLong: String) = viewModelScope.launch {
         val resp = interactor.forecastInteractor.forecast(latLong)
         resp.collect {
             _forecastLiveData.postValue(it)
-
-//            if (it is ResultWrapper.Success) {
-//                _forecastData.postValue(it.data)
-//            }
-
-//            Log.i("forcast_res_tag", "forecast: resp" + it)
         }
     }
 }
