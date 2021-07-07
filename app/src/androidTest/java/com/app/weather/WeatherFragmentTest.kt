@@ -2,10 +2,9 @@ package com.app.weather
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.app.weather.presentation.di.AppFragmentFactory
 import com.app.weather.presentation.weather.WeatherFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -25,9 +24,8 @@ class WeatherFragmentTest {
 
     @Before
     fun setUp() {
-        launchFragmentInHiltContainer<WeatherFragment> {
-            this.shouldAskForLocationPermission = false
-        }
+        val fragmentFactory = AppFragmentFactory(FakeLocationHelper())
+        launchFragmentInHiltContainer<WeatherFragment>(fragmentFactory = fragmentFactory) { }
     }
 
     @Test
@@ -105,13 +103,4 @@ class WeatherFragmentTest {
         onView(withId(R.id.day_3_text_view)).check(matches(withText("")))
     }
 
-//    @Test
-//    fun should_display_recycler_view() {
-//
-//        launchFragmentInHiltContainer<WeatherFragment> {
-//            onView(withId(R.id.hourlyForecastRecyclerView))
-//                .check(matches(isDisplayed()))
-//        }
-//
-//    }
 }

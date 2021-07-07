@@ -15,7 +15,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WeatherFragment : Fragment(R.layout.fragment_weather) {
+class WeatherFragment(val locationHelper : LocationHelper): Fragment(R.layout.fragment_weather) {
 
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val weatherViewModel: WeatherViewModel by viewModels()
@@ -24,6 +24,11 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     var shouldAskForLocationPermission = true
 
+
+//    @Inject
+//    lateinit var locationHelper : LocationHelper
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -31,7 +36,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
         observeInFragment()
 
-        val locationHelper = LocationHelper()
+//        val locationHelper = LocationHelper()
 
         locationHelper.checkLocationPermission(this , {
             weatherViewModel.forecast(it)
