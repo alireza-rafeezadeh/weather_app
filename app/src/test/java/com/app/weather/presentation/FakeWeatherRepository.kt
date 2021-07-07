@@ -1,12 +1,7 @@
 package com.app.weather.presentation
 
-import com.app.core.data.repository.ResultWrapper
 import com.app.core.data.repository.home.WeatherRepository
-import com.app.core.domain.Condition
-import com.app.core.domain.Current
-import com.app.core.domain.Forecast
-import com.app.core.domain.ForecastResponse
-import com.app.core.domain.Location
+import com.app.core.domain.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
