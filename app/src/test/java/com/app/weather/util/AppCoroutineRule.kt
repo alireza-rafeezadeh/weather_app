@@ -1,4 +1,4 @@
-package com.app.weather.presentation
+package com.app.weather.util
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

@@ -7,13 +7,12 @@ class FakeLocationHelper : LocationHelper {
     override fun registerPermissionLauncher(fragment: Fragment) {
 
     }
-
     override fun askForLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,
         featureUnavailableAction: (error: String) -> Unit
     ) {
-        isGrantedAction("New York")
+        featureUnavailableAction("some random error")
     }
 
     override fun getLatLong(fragment: Fragment) {

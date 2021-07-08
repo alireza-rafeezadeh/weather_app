@@ -14,6 +14,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * More tests could be added with another fake location helper which accepts user location
+ * permission this one used here rejects
+ */
+
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
@@ -54,7 +59,6 @@ class WeatherFragmentTest {
 
     @Test
     fun should_display_views_in_forecast_section() {
-
         onView(withId(R.id.temp_1_text_view))
             .check(matches(withText("")))
         onView(withId(R.id.temp_2_text_view))
@@ -79,7 +83,6 @@ class WeatherFragmentTest {
 
     @Test
     fun should_match_text_values_with_text_in_today_section() {
-
         onView(withId(R.id.wind_speed_title)).check(matches(withText("Wind Speed")))
         onView(withId(R.id.humidity_title)).check(matches(withText("Humidity")))
         onView(withId(R.id.cloud_percentage_title)).check(matches(withText("Cloud Percentage")))
@@ -88,10 +91,8 @@ class WeatherFragmentTest {
 
     @Test
     fun should_match_text_values_with_text_in_forecast_section() {
-
         onView(withId(R.id.day_1_text_view)).check(matches(withText("Today")))
         onView(withId(R.id.day_2_text_view)).check(matches(withText("Tomorrow")))
         onView(withId(R.id.day_3_text_view)).check(matches(withText("")))
     }
-
 }

@@ -1,11 +1,12 @@
-package com.app.weather.presentation
+package com.app.weather.presentation.weather
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.core.domain.*
-import com.app.core.domain.weather.*
+import com.app.core.domain.ResultWrapper
 import com.app.core.interactor.weather.ForecastInteractor
 import com.app.core.interactor.weather.WeatherInteractors
 import com.app.weather.presentation.ui.weather.WeatherViewModel
+import com.app.weather.util.AppCoroutineRule
+import com.app.weather.util.ForecastMockData
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -25,27 +26,17 @@ class WeatherViewModelTest {
 
     @Before
     fun setUp() {
-        weatherViewModel = WeatherViewModel(WeatherInteractors(ForecastInteractor(FakeWeatherRepository())))
+        weatherViewModel = WeatherViewModel(WeatherInteractors(ForecastInteractor(
+            FakeWeatherRepository()
+        )))
     }
 
     @Test
     fun forecast() {
         weatherViewModel.forecast("")
-
-        val current = Current(
-            1, Condition(0, "", ""), 1.0, 1.0, 1.0,
-            1.0, 1, 1, "", 1, 1.0,
-            1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-            1.0, 1.0, 1, "", 1.0, 1.0
-        )
-
-        val location = Location("", 1.0, "", 1, 1.0, "",
-            "", "")
-
-        val expectedResp = ForecastResponse(current, Forecast(emptyList()), location)
-
-//        ResultWrapper.Success(expectedResp)
+        ForecastMockData.forecastFakeResponse().also { expectedResp ->
         assertThat(weatherViewModel.forecastLiveData.value)
             .isEqualTo(ResultWrapper.Success(expectedResp))
+        }
     }
 }
