@@ -2,8 +2,6 @@
 
 This application gets user location and shows current weather information.
 
-![scratch_logo](docs/weather_app.jpg)
-
 <img src="docs/weather_app.jpg" width="300" />
 
 
