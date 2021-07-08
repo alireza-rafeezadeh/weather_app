@@ -39,7 +39,6 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         observeInFragment()
 //        askLocationPermission()
 
-
         getDefaultData()
         locationHelper.askForLocationPermission(this, {
             weatherViewModel.forecast(it)
@@ -51,9 +50,9 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
 
     private fun getDefaultData() {
         // TODO:
-//        if (!locationHelper.hasLocationPermission(this)) {
-//        }
+        if (!locationHelper.hasLocationPermission(this)) {
             weatherViewModel.forecast("Chicago")
+        }
     }
 
     private fun askLocationPermission() {

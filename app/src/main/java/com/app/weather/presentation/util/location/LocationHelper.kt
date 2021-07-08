@@ -7,7 +7,7 @@ interface LocationHelper {
     fun askForLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,
-        featureUnavailableAction: () -> Unit
+        featureUnavailableAction: (error : String) -> Unit
     )
 
     fun getLatLong(fragment: Fragment)

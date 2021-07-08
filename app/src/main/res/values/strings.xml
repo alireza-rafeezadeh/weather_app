@@ -3,4 +3,6 @@
     <string name="today_text">Today</string>
     <string name="tomorrow_text">Tomorrow</string>
     <string name="location_permission_denied_message">Location permission is needed to display weather data.</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="service_unavailable">Service unavailable</string>
 </resources>
