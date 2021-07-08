@@ -13,4 +13,8 @@ interface LocationHelper {
     fun getLatLong(fragment: Fragment, isGrantedAction: (latLong: String) -> Unit)
 
     fun hasLocationPermission(fragment: Fragment) : Boolean
+
+    fun getLocationDialog(context : Fragment)
+
+    fun startLocationUpdates(fragment: Fragment)
 }

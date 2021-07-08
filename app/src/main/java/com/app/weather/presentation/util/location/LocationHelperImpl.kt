@@ -4,15 +4,16 @@ import android.Manifest
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.app.weather.presentation.weather.getLatLong
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.common.api.*
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -25,12 +26,16 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
 
     private lateinit var locationCallback: LocationCallback
 
+    lateinit var locationRequest : LocationRequest
+
+    var callBack : (result : String) -> Unit = { }
 
     override fun checkLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,
         featureUnavailableAction: () -> Unit
     ) {
+        callBack = isGrantedAction
         val requestPermissionLauncher =
             fragment.registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -38,7 +43,8 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                 if (isGranted) {
                     // Permission is granted. Continue the action or workflow in your
                     // app.
-                    getLatLong(fragment, isGrantedAction)
+//                    getLatLong(fragment, isGrantedAction)
+                    enableGPS(fragment)
                 } else {
                     featureUnavailableAction()
                 }
@@ -49,7 +55,8 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                 fragment.requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED -> {
-                getLatLong(fragment, isGrantedAction)
+//                getLatLong(fragment, isGrantedAction)
+                enableGPS(fragment)
             }
             /*shouldShowRequestPermissionRationale(...) -> {
             // In an educational UI, explain to the user why your app requires this
@@ -67,8 +74,7 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
     }
 
      override fun getLatLong(fragment: Fragment, isGrantedAction: (latLong: String) -> Unit) {
-        fusedLocationClient =
-            LocationServices.getFusedLocationProviderClient(fragment.requireActivity())
+
 
         if (ActivityCompat.checkSelfPermission(
                 fragment.requireContext(),
@@ -96,15 +102,20 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
 
                 location?.getLatLong()?.let {
                     isGrantedAction(it)
+                    callBack(it)
                 }
                 if (location == null ) {
-                    getLocationDialog(fragment )
+//                    getLocationDialog(fragment )
 //                    startLocationUpdates(fragment, locationRequest)
                 }
             }
     }
 
-    private fun startLocationUpdates(fragment: Fragment, locationRequest: LocationRequest) {
+
+    override fun startLocationUpdates(fragment: Fragment) {
+
+        fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(fragment.requireActivity())
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
@@ -113,6 +124,9 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                     Log.i("location_updated", "onLocationResult: ")
                     // Update UI with location data
                     // ...
+                    getLatLong(fragment) {
+                        Log.i("final_loc", "onLocationResult: $it")
+                    }
                 }
             }
         }
@@ -161,9 +175,10 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
     }
 
 
+    protected val REQUEST_CHECK_SETTINGS = 0x1
 
-    private fun getLocationDialog(context : Fragment) {
-        val locationRequest = LocationRequest.create()
+    override fun getLocationDialog(context : Fragment) {
+        locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = (30 * 1000).toLong()
         locationRequest.fastestInterval = (5 * 1000).toLong()
@@ -177,7 +192,7 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                 val response = task.getResult(ApiException::class.java)
 
                 //TODO:
-                startLocationUpdates(context, locationRequest )
+                startLocationUpdates(context )
                 // All location settings are satisfied. The client can initialize location
                 // requests here.
             } catch (exception: ApiException) {
@@ -191,11 +206,11 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                             // and check the result in onActivityResult().
                             resolvable.startResolutionForResult(
                                 context.requireActivity(),
-                                3324 //TODO: change this!
+                                REQUEST_CHECK_SETTINGS //TODO: change this!
                             )
 
                             //TODO:
-                            startLocationUpdates(context, locationRequest )
+//                            startLocationUpdates(context )
                         } catch (e: IntentSender.SendIntentException) {
                             // Ignore the error.
                         } catch (e: ClassCastException) {
@@ -206,6 +221,53 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                 }
             }
         })
+    }
+
+
+    private var googleApiClient: GoogleApiClient? = null
+    private val REQUESTLOCATION = 199
+
+    private fun enableGPS(context: Fragment) {
+        googleApiClient = GoogleApiClient.Builder(context.requireContext())
+            .addApi(LocationServices.API)
+            .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                override fun onConnected(bundle: Bundle?) {}
+                override fun onConnectionSuspended(i: Int) {
+                    googleApiClient?.connect()
+                }
+            })
+            .addOnConnectionFailedListener {
+            }.build()
+        googleApiClient?.connect()
+
+        locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 30 * 1000.toLong()
+        locationRequest.fastestInterval = 5 * 1000.toLong()
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result: PendingResult<LocationSettingsResult> =
+            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        result.setResultCallback { result ->
+            val status: Status = result.status
+            when (status.statusCode) {
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+//                    status.startResolutionForResult(
+//                        requireActivity(),
+//                        REQUESTLOCATION
+//                    )
+
+                    context.startIntentSenderForResult(status.getResolution().getIntentSender(), REQUESTLOCATION, null, 0, 0, 0, null);
+//                    startIntentSenderForResult()
+                } catch (e: IntentSender.SendIntentException) {
+                }
+                else -> {
+                    Toast.makeText(context.requireContext() , "permission granted", Toast.LENGTH_SHORT).show()
+                    startLocationUpdates(context)
+                }
+            }
+        }
     }
 
 }

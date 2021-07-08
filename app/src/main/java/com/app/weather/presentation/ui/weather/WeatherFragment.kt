@@ -1,6 +1,8 @@
 package com.app.weather.presentation.ui.weather
 
+import android.app.Activity
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -15,6 +17,10 @@ import com.app.weather.presentation.util.location.LocationHelper
 import com.app.weather.presentation.util.viewBinding
 import com.app.weather.presentation.weather.getURL
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -23,15 +29,29 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
 
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val weatherViewModel: WeatherViewModel by viewModels()
-    private val REQUEST_CHECK_SETTINGS = 3324
+//    private val REQUEST_CHECK_SETTINGS = 3324
+
+    protected val REQUEST_CHECK_SETTINGS = 0x1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        enableLoc()
+
+        locationHelper.checkLocationPermission(this, {
+            weatherViewModel.forecast(it)
+        }, {
+
+        })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInFragment()
-        getDefaultData()
-        askLocationPermission()
+//        getDefaultData()
+//        askLocationPermission()
 
 
+//        locationHelper.getLocationDialog(this)
 
 //        val manager =
 //            getSystemService(requireContext(),LOCATION_SERVICE::class.java)
@@ -119,12 +139,83 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
             .into(binding.currentConditionImageView)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode) {
-            REQUEST_CHECK_SETTINGS -> {
-                askLocationPermission()
+
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Toast.makeText(requireContext(), "on request permission result", Toast.LENGTH_SHORT).show()
+
+    }
+
+    private var googleApiClient: GoogleApiClient? = null
+    private val REQUESTLOCATION = 199
+
+    private fun enableLoc() {
+        googleApiClient = GoogleApiClient.Builder(requireContext())
+            .addApi(LocationServices.API)
+            .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                override fun onConnected(bundle: Bundle?) {}
+                override fun onConnectionSuspended(i: Int) {
+                    googleApiClient?.connect()
+                }
+            })
+            .addOnConnectionFailedListener {
+            }.build()
+        googleApiClient?.connect()
+        val locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 30 * 1000.toLong()
+        locationRequest.fastestInterval = 5 * 1000.toLong()
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result: PendingResult<LocationSettingsResult> =
+            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        result.setResultCallback { result ->
+            val status: Status = result.status
+            when (status.statusCode) {
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+//                    status.startResolutionForResult(
+//                        requireActivity(),
+//                        REQUESTLOCATION
+//                    )
+
+                    startIntentSenderForResult(status.getResolution().getIntentSender(), REQUESTLOCATION, null, 0, 0, 0, null);
+//                    startIntentSenderForResult()
+                } catch (e: IntentSender.SendIntentException) {
+                }
+                else -> {
+                    Toast.makeText(requireContext(), "permission granted", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
+
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Toast.makeText(requireContext(), "on activity result called", Toast.LENGTH_SHORT).show()
+        when (requestCode) {
+            REQUESTLOCATION -> when (resultCode) {
+                Activity.RESULT_OK -> {
+                    Toast.makeText(requireContext(), "permission accepted", Toast.LENGTH_SHORT)
+                        .show()
+                    locationHelper.startLocationUpdates(this)
+                }
+                Activity.RESULT_CANCELED -> {
+
+                }
+            }
+        }
+    }
+
 }
