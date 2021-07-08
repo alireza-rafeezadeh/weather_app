@@ -36,6 +36,13 @@ The design is minimalistic. I made it with the sketch app.
 You can get the sketch file [here](https://www.dropbox.com/sh/55yg7fh3wuqlu2w/AAA5YfU6kGrBbG2ZMWNgWYFta?dl=0)
 
 
+## Archicture
+
+[Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) was used to perform separation of concerns.
+[MVVM](https://en.wikipedia.org/wiki/Model–view–viewmodel) and 
+[repository pattern](https://developer.android.com/jetpack/guide) were used in presentation 
+and data layers accordingly. 
+
 ## Backend
 
 [Weather Api](https://www.weatherapi.com) was used to for the remote data.
