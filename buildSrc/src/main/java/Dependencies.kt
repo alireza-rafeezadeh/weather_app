@@ -7,32 +7,28 @@ private const val lifecycle_version = "2.2.0"
 private const val nav_version = "2.3.2"
 private const val glide_version = "4.12.0"
 
-
 object KotlinDependencies {
-
     val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     val coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     val coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 }
 
 object GradleDependencies {
-
     val build_gradle = "com.android.tools.build:gradle:4.2.2"
     val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     val hilt_android_gradle_plugin = "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 }
 
 object AndroidXDependencies {
-
     val core_ktx = "androidx.core:core-ktx:1.6.0"
     val appcompat = "androidx.appcompat:appcompat:1.3.0"
     val material = "com.google.android.material:material:1.3.0"
     val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
     val location_services = "com.google.android.gms:play-services-location:18.0.0"
+    val swipe_refresh_layout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }
 
 object TestDependencies {
-
     val jUnit = "junit:junit:4.+"
     val androidx_core_testing = "androidx.arch.core:core-testing:$arch_version"
     val androidx_truth = "androidx.test.ext:truth:1.3.0"
@@ -46,14 +42,12 @@ object TestDependencies {
 }
 
 object DataDependencies {
-
     val retrofit = "com.squareup.retrofit2:retrofit:$retrofit_version"
     val moshi = "com.squareup.moshi:moshi-kotlin:1.11.0"
     val moshi_converter = "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 }
 
 object JetpackDependencies {
-
     val hilt_android = "com.google.dagger:hilt-android:$hilt_version"
     val hilt_compiler = "com.google.dagger:hilt-compiler:$hilt_version"
     val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -68,7 +62,6 @@ object JetpackDependencies {
 }
 
 object GlideDependencies {
-
     val glide = "com.github.bumptech.glide:glide:$glide_version"
     val glide_compiler = "com.github.bumptech.glide:compiler:$glide_version"
 }
