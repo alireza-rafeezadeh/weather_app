@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    api(KotlinDependencies.kotlin_stdlib)
+    api(KotlinDependencies.coroutines_core)
+    api(KotlinDependencies.coroutines_android)
+
+    api(AndroidXDependencies.core_ktx)
+    api(AndroidXDependencies.appcompat)
+    api(AndroidXDependencies.material)
+
+    api(DataDependencies.retrofit)
+    api(DataDependencies.moshi)
+    api(DataDependencies.moshi_converter)
+
+    api(JetpackDependencies.hilt_android)
+    kapt(JetpackDependencies.hilt_compiler)
+
+    testImplementation(TestDependencies.jUnit)
+    testApi(TestDependencies.coroutines_test)
+    testImplementation(TestDependencies.androidx_core_testing)
+    testImplementation(TestDependencies.androidx_truth)
+    testImplementation(TestDependencies.google_truth)
+
+    androidTestImplementation(TestDependencies.androidx_test_ext_jUnit)
+    androidTestImplementation(TestDependencies.espresso_core)
+    androidTestImplementation(TestDependencies.androidx_truth)
+    androidTestImplementation(TestDependencies.google_truth)
+}
