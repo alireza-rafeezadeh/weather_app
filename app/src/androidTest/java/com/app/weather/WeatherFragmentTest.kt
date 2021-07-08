@@ -29,47 +29,41 @@ class WeatherFragmentTest {
     }
 
     @Test
-    fun should_display_views() {
+    fun should_display_top_views() {
 
         onView(withId(R.id.current_temperature_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
         onView(withId(R.id.current_condition_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
         onView(withId(R.id.current_location_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
     }
 
     @Test
-    fun should_display_views_in_today_section() {
-
-        onView(withId(R.id.current_temperature_text_view))
-            .check(matches(isDisplayed()))
+    fun should_display_empty_text_in_today_section_text_views() {
 
         onView(withId(R.id.wind_speed_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
 
         onView(withId(R.id.humidity_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
 
         onView(withId(R.id.cloud_percentage_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
 
         onView(withId(R.id.pressure_text_view))
-            .check(matches(isDisplayed()))
-
-        onView(withId(R.id.wind_speed_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
     }
 
     @Test
     fun should_display_views_in_forecast_section() {
 
         onView(withId(R.id.temp_1_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
         onView(withId(R.id.temp_2_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
         onView(withId(R.id.temp_3_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
 
         onView(withId(R.id.weath_ic_1_image_view))
             .check(matches(isDisplayed()))
@@ -79,11 +73,11 @@ class WeatherFragmentTest {
             .check(matches(isDisplayed()))
 
         onView(withId(R.id.humidity_1_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
         onView(withId(R.id.humidity_2_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
         onView(withId(R.id.humidity_3_text_view))
-            .check(matches(isDisplayed()))
+            .check(matches(withText("")))
     }
 
     @Test
