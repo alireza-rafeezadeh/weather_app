@@ -4,6 +4,9 @@ This application gets user location and shows current weather information.
 
 ![scratch_logo](docs/weather_app.jpg)
 
+<img src="docs/weather_app.jpg" width="300" />
+
+
 ## Tech
 
 These tools have been used in this project:
@@ -32,7 +35,7 @@ Only tested on
 ## Design
 
 The design is minimalistic. I made it with the sketch app.
-You can get the sketch file here.
+You can get the sketch file [here](https://www.dropbox.com/sh/55yg7fh3wuqlu2w/AAA5YfU6kGrBbG2ZMWNgWYFta?dl=0)
 
 
 ## Backend
@@ -43,4 +46,4 @@ You will need an access key to get the app working.
 
 ## Download
 
-You can download the apk directly from here.
+You can download the apk directly from [here](https://www.dropbox.com/sh/wexu0lwdzdo1uvx/AAAGinxoexrYc436RIjGogH1a?dl=0).
