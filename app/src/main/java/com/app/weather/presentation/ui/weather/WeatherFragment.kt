@@ -45,6 +45,7 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
 
         })*/
 
+
         Log.i("we_live_data", weatherViewModel.forecastLiveData.value.toString())
         getWeatherInfo()
 

@@ -17,12 +17,10 @@ open class BaseDataSource {
                         emit(ResultWrapper.Success(it))
                     }
                 } else {
-                    if (response.code() == 400) {
-                        emit(ResultWrapper.ErrorString(response.message()))
-                    }
+                    emit(ResultWrapper.ErrorString(response.message()))
                 }
             } catch (e: Exception) {
-                ResultWrapper.Success("Unknown Error occurred!")
+                ResultWrapper.Success(e.message ?: "Unknown Error occurred!")
             }
         }.flowOn(Dispatchers.IO)
 }

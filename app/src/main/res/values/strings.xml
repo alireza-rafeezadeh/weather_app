@@ -5,4 +5,5 @@
     <string name="location_permission_denied_message">Location permission is needed to display weather data.</string>
     <string name="unknown_error">Unknown error</string>
     <string name="service_unavailable">Service unavailable</string>
+    <string name="network_unavailable">Please check your internet connection!</string>
 </resources>
