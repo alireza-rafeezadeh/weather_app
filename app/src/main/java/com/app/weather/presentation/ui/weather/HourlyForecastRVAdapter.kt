@@ -1,9 +1,9 @@
-package com.app.weather.presentation.weather
+package com.app.weather.presentation.ui.weather
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.core.domain.Hour
+import com.app.core.domain.weather.Hour
 import com.app.weather.databinding.ItemHourlyForecastBinding
 
 class HourlyForecastRVAdapter(val hours: List<Hour>) :
@@ -28,7 +28,7 @@ class HourlyForecastRVAdapter(val hours: List<Hour>) :
             with(binding) {
                 hourTextView.text = hour.time.substringAfter(" ")
                 temperatureTextView.text = hour.temp_c.toString()
-                humidityTextView.text = hour.humidity.toString()
+                humidityTextView.text = "${hour.humidity}%"
             }
         }
     }

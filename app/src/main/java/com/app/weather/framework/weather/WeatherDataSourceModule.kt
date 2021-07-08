@@ -1,6 +1,6 @@
-package com.app.weather.framework
+package com.app.weather.framework.weather
 
-import com.app.core.data.datasource.WeatherDataSource
+import com.app.core.data.datasource.weather.WeatherDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

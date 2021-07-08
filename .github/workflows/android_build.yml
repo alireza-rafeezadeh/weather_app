@@ -3,13 +3,11 @@ name: Android Build CI
 on:
   pull_request:
 
-
 jobs:
   test:
     name: Configure OS
     runs-on: macos-latest
     #    runs-on: ubuntu-18.04
-
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 1.8
@@ -17,18 +15,6 @@ jobs:
         with:
           java-version: 1.8
 
-#      - name: Instrumentation tests
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          api-level: 29
-#          script: ./gradlew connectedCheck
-#      #          script: ./gradlew connectedProductionAndroidTest
-
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
-
-
-#      - name: Instrumentation tests
-#        run: bash ./gradlew cAT --stacktrace
-
 

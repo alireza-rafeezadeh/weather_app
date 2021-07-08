@@ -1,20 +1,20 @@
-package com.app.weather.framework
+package com.app.weather.framework.weather
 
-import com.app.core.data.datasource.WeatherDataSource
+import com.app.core.data.datasource.weather.WeatherDataSource
 import com.app.core.data.network.api.weather.WeatherApi
 import com.app.core.data.repository.BaseDataSource
-import com.app.core.data.repository.ResultWrapper
-import com.app.core.domain.ForecastResponse
-import javax.inject.Inject
+import com.app.core.domain.ACCESS_KEY
+import com.app.core.domain.ResultWrapper
+import com.app.core.domain.weather.ForecastResponse
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 class WeatherDataSourceImpl @Inject constructor(private val weatherApi: WeatherApi) :
     BaseDataSource(), WeatherDataSource {
 
     override suspend fun forecast(latLong: String): Flow<ResultWrapper<ForecastResponse>> {
-//        weatherApi.forecast("","","",1)
         return flowOnIO {
-            weatherApi.forecast("d9634b89467748b8b4261455210107", latLong, "no", 6)
+            weatherApi.forecast(ACCESS_KEY, latLong, "no", 6)
         }
     }
 }

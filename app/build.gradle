@@ -15,9 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner "com.app.weather.AppTestRunner"
-
+        testInstrumentationRunner "com.app.weather.util.AppTestRunner"
     }
 
     buildTypes {
@@ -40,13 +38,10 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(KotlinDependencies.kotlin_stdlib)
 
-    implementation(AndroidXDependencies.core_ktx)
-    implementation(AndroidXDependencies.appcompat)
-    implementation(AndroidXDependencies.material)
     implementation(AndroidXDependencies.constraintlayout)
     implementation(AndroidXDependencies.location_services)
+    implementation(AndroidXDependencies.swipe_refresh_layout)
 
     implementation(JetpackDependencies.hilt_android)
     kapt(JetpackDependencies.hilt_compiler)
@@ -54,8 +49,6 @@ dependencies {
     implementation(JetpackDependencies.livedata)
     implementation(JetpackDependencies.viewmodel_saved_state)
     kapt(JetpackDependencies.lifecycle_compiler)
-    // alternately - if using Java8, use the following instead of lifecycle-compiler
-//    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation(JetpackDependencies.lifecycle_compiler_java_8)
     implementation(JetpackDependencies.navigaiton_fragment)
     implementation(JetpackDependencies.navigaiton_ui)

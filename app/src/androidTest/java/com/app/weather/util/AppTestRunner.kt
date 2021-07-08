@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package com.app.weather
+package com.app.weather.util
 
 import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
 import dagger.hilt.android.testing.HiltTestApplication
+
+/**
+ * If you relocate this you need to also update app's build gradle file testInstrumentationRunner
+ */
 
 @Suppress("unused")
 class AppTestRunner : AndroidJUnitRunner() {

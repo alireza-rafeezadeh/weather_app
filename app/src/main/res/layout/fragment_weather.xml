@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/weather_swipe_refresh_layout"
     android:layout_height="match_parent"
-    android:background="@color/gallery"
-    android:fillViewport="true">
+    android:background="@color/gallery">
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,7 +20,7 @@
 
         <TextView
             android:id="@+id/current_temperature_text_view"
-            android:layout_width="103dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
             android:fontFamily="@font/calibri"
@@ -29,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="partly cloudy"
             android:textColor="@color/dove_gray"
             app:layout_constraintEnd_toEndOf="@+id/current_temperature_text_view"
             app:layout_constraintStart_toStartOf="@+id/current_temperature_text_view"
@@ -40,21 +46,21 @@
             android:id="@+id/current_location_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Tehran"
+            android:layout_marginTop="4dp"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="@+id/current_condition_text_view"
             app:layout_constraintStart_toStartOf="@+id/current_condition_text_view"
-            app:layout_constraintTop_toBottomOf="@+id/current_condition_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/current_condition_text_view"
+            tools:text="Tehran" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@drawable/weather_section_bg"
             android:id="@+id/hourlyForecastRecyclerView"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginStart="@dimen/weather_section_margin"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="@dimen/weather_section_margin"
+            android:background="@drawable/weather_section_bg"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="135dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/weather_section_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/view"
@@ -164,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/calibri"
-            android:text="45 km/h"
+            tools:text="45 km/h"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             app:layout_constraintEnd_toEndOf="@+id/view"
@@ -175,7 +181,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/calibri"
-            android:text="45 km/h"
+            tools:text="45 km/h"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             app:layout_constraintEnd_toEndOf="@+id/wind_speed_text_view"
@@ -187,7 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/calibri"
-            android:text="45 km/h sdfsd fsf"
+            tools:text="45 km/h sdfsd fsf"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             app:layout_constraintEnd_toEndOf="@+id/humidity_text_view"
@@ -198,7 +204,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/calibri"
-            android:text="45 km/h"
+            tools:text="45 km/h"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             app:layout_constraintEnd_toEndOf="@+id/cloud_percentage_text_view"
@@ -246,7 +252,7 @@
             android:id="@+id/temp_1_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="29"
+            tools:text="29"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             android:textStyle="bold"
@@ -258,7 +264,7 @@
             android:id="@+id/temp_2_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="29"
+            tools:text="29"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             android:textStyle="bold"
@@ -270,7 +276,7 @@
             android:id="@+id/temp_3_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="29"
+            tools:text="29"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             android:textStyle="bold"
@@ -335,7 +341,7 @@
             android:id="@+id/humidity_1_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="29"
+            tools:text="29"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             android:textStyle="bold"
@@ -346,7 +352,7 @@
             android:id="@+id/humidity_2_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="29"
+            tools:text="29"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             android:textStyle="bold"
@@ -357,7 +363,7 @@
             android:id="@+id/humidity_3_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="29"
+            tools:text="29"
             android:textColor="@color/gray"
             android:textSize="@dimen/body_1"
             android:textStyle="bold"
@@ -406,7 +412,22 @@
             app:layout_constraintStart_toStartOf="@+id/view4"
             app:layout_constraintTop_toBottomOf="@+id/cloud_percentage_title" />
 
+        <ProgressBar
+            android:id="@+id/weather_progress_bar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/denim"
+            tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</ScrollView>
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

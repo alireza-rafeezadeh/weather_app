@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/weatherFragment"
         tools:layout="@layout/fragment_weather"
-        android:name="com.app.weather.presentation.weather.WeatherFragment"
+        android:name="com.app.weather.presentation.ui.weather.WeatherFragment"
         android:label="WeatherFragment" />
 </navigation>
