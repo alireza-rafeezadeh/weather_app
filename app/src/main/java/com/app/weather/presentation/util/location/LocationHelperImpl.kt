@@ -52,6 +52,7 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
         featureUnavailableAction: (error: String) -> Unit
     ) {
         onLatLongReceived = isGrantedAction
+        onError = featureUnavailableAction
         when {
             ContextCompat.checkSelfPermission(
                 fragment.requireContext(),
