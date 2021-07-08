@@ -157,6 +157,7 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                     // Update UI with location data
                     // ...
                     getLatLong(fragment)
+                    stopLocationUpdates()
                 }
             }
         }
@@ -183,6 +184,10 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
             locationCallback,
             Looper.getMainLooper()
         )
+    }
+
+    private fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
     override fun getLatLong(fragment: Fragment) {

@@ -20,7 +20,7 @@ open class BaseDataSource {
                     emit(ResultWrapper.ErrorString(response.message()))
                 }
             } catch (e: Exception) {
-                ResultWrapper.Success(e.message ?: "Unknown Error occurred!")
+                emit(ResultWrapper.ErrorString(e.message ?: "Unknown Error occurred!"))
             }
         }.flowOn(Dispatchers.IO)
 }
