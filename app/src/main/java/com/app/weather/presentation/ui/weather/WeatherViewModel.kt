@@ -19,6 +19,7 @@ class WeatherViewModel @Inject constructor(val interactor: WeatherInteractors) :
     val forecastLiveData: LiveData<ResultWrapper<ForecastResponse>> = _forecastLiveData
 
     fun forecast(latLong: String) = viewModelScope.launch {
+        _forecastLiveData.value = ResultWrapper.InProgress
         val resp = interactor.forecastInteractor.forecast(latLong)
         resp.collect {
             _forecastLiveData.postValue(it)

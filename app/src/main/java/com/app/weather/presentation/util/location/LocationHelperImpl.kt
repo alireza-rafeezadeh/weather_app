@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.app.core.domain.RequestCodes
-import com.app.weather.presentation.weather.getLatLong
+import com.app.weather.presentation.util.getLatLong
 import com.google.android.gms.common.api.*
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
 class LocationHelperImpl @Inject constructor() : LocationHelper {
-
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback

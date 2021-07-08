@@ -406,6 +406,19 @@
             app:layout_constraintStart_toStartOf="@+id/view4"
             app:layout_constraintTop_toBottomOf="@+id/cloud_percentage_title" />
 
+        <ProgressBar
+            android:id="@+id/weather_progress_bar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/denim"
+            tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

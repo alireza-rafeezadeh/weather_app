@@ -13,9 +13,11 @@ import com.app.core.domain.weather.ForecastResponse
 import com.app.core.domain.weather.Hour
 import com.app.weather.R
 import com.app.weather.databinding.FragmentWeatherBinding
+import com.app.weather.presentation.util.getURL
+import com.app.weather.presentation.util.gone
 import com.app.weather.presentation.util.location.LocationHelper
 import com.app.weather.presentation.util.viewBinding
-import com.app.weather.presentation.weather.getURL
+import com.app.weather.presentation.util.visible
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,25 +32,28 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        locationHelper.askForLocationPermission(this, {
-            weatherViewModel.forecast(it)
-        }, {
-
-        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInFragment()
-        getDefaultData()
 //        askLocationPermission()
+
+
+        getDefaultData()
+        locationHelper.askForLocationPermission(this, {
+            weatherViewModel.forecast(it)
+        }, {
+
+        })
 
     }
 
     private fun getDefaultData() {
-        if (!locationHelper.hasLocationPermission(this)) {
-            weatherViewModel.forecast("New York")
-        }
+        // TODO:
+//        if (!locationHelper.hasLocationPermission(this)) {
+//        }
+            weatherViewModel.forecast("Chicago")
     }
 
     private fun askLocationPermission() {
@@ -67,13 +72,17 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         weatherViewModel.forecastLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {
+                    binding.weatherProgressBar.gone()
                     initSectionToday(it.data)
                     initSectionForecast(it.data)
                     initRecyclerView(it.data.forecast.forecastday[0].hour)
                 }
-                is ResultWrapper.Error -> {
+                is ResultWrapper.ErrorString -> {
+                    Toast.makeText(requireContext(), it.exception, Toast.LENGTH_SHORT).show()
+                    binding.weatherProgressBar.gone()
                 }
                 is ResultWrapper.InProgress -> {
+                    binding.weatherProgressBar.visible()
                 }
             }
         }
@@ -173,12 +182,9 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
-        Toast.makeText(requireContext(), "on activity result called", Toast.LENGTH_SHORT).show()
         when (requestCode) {
             RequestCodes.LOCATION -> when (resultCode) {
                 Activity.RESULT_OK -> {
-                    Toast.makeText(requireContext(), "permission accepted", Toast.LENGTH_SHORT)
-                        .show()
                     locationHelper.startLocationUpdates(this)
                 }
                 Activity.RESULT_CANCELED -> {
