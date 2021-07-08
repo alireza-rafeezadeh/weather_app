@@ -7,11 +7,11 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.app.core.domain.RequestCodes
 import com.app.weather.presentation.weather.getLatLong
 import com.google.android.gms.common.api.*
 import com.google.android.gms.location.*
@@ -23,14 +23,13 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
 
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
     private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest : LocationRequest
+    private var callBack : (result : String) -> Unit = { }
 
-    lateinit var locationRequest : LocationRequest
+    private var googleApiClient: GoogleApiClient? = null
 
-    var callBack : (result : String) -> Unit = { }
-
-    override fun checkLocationPermission(
+    override fun askForLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,
         featureUnavailableAction: () -> Unit
@@ -73,44 +72,50 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
         }
     }
 
-     override fun getLatLong(fragment: Fragment, isGrantedAction: (latLong: String) -> Unit) {
 
 
-        if (ActivityCompat.checkSelfPermission(
-                fragment.requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                fragment.requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                // Got last known location. In some rare situations this can be null.
-                Log.i("location_tag", "performAction: -> $location ")
-
-                Log.i("lat_long_tag", "${location?.latitude}/${location?.longitude}")
-
-                location?.getLatLong()?.let {
-                    isGrantedAction(it)
-                    callBack(it)
+    private fun enableGPS(context: Fragment) {
+        googleApiClient = GoogleApiClient.Builder(context.requireContext())
+            .addApi(LocationServices.API)
+            .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                override fun onConnected(bundle: Bundle?) {}
+                override fun onConnectionSuspended(i: Int) {
+                    googleApiClient?.connect()
                 }
-                if (location == null ) {
-//                    getLocationDialog(fragment )
-//                    startLocationUpdates(fragment, locationRequest)
+            })
+            .addOnConnectionFailedListener {
+            }.build()
+        googleApiClient?.connect()
+
+        locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 30 * 1000.toLong()
+        locationRequest.fastestInterval = 5 * 1000.toLong()
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result: PendingResult<LocationSettingsResult> =
+            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        result.setResultCallback { result ->
+            val status: Status = result.status
+            when (status.statusCode) {
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+//                    status.startResolutionForResult(
+//                        requireActivity(),
+//                        REQUESTLOCATION
+//                    )
+
+                    context.startIntentSenderForResult(status.getResolution().getIntentSender(), RequestCodes.LOCATION, null, 0, 0, 0, null);
+//                    startIntentSenderForResult()
+                } catch (e: IntentSender.SendIntentException) {
+                }
+                else -> {
+//                    Toast.makeText(context.requireContext() , "permission granted", Toast.LENGTH_SHORT).show()
+                    startLocationUpdates(context)
                 }
             }
+        }
     }
-
 
     override fun startLocationUpdates(fragment: Fragment) {
 
@@ -124,9 +129,7 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                     Log.i("location_updated", "onLocationResult: ")
                     // Update UI with location data
                     // ...
-                    getLatLong(fragment) {
-                        Log.i("final_loc", "onLocationResult: $it")
-                    }
+                    getLatLong(fragment)
                 }
             }
         }
@@ -152,6 +155,45 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
             locationCallback,
             Looper.getMainLooper())
     }
+
+     override fun getLatLong(fragment: Fragment) {
+        if (ActivityCompat.checkSelfPermission(
+                fragment.requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                fragment.requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                // Got last known location. In some rare situations this can be null.
+                Log.i("location_tag", "performAction: -> $location ")
+
+                Log.i("lat_long_tag", "${location?.latitude}/${location?.longitude}")
+
+                location?.getLatLong()?.let {
+//                    isGrantedAction(it)
+                    callBack(it)
+                }
+                if (location == null ) {
+//                    getLocationDialog(fragment )
+//                    startLocationUpdates(fragment, locationRequest)
+                }
+            }
+    }
+
+
+
 
     override fun hasLocationPermission(fragment: Fragment) : Boolean {
         if (ActivityCompat.checkSelfPermission(
@@ -224,50 +266,6 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
     }
 
 
-    private var googleApiClient: GoogleApiClient? = null
-    private val REQUESTLOCATION = 199
 
-    private fun enableGPS(context: Fragment) {
-        googleApiClient = GoogleApiClient.Builder(context.requireContext())
-            .addApi(LocationServices.API)
-            .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
-                override fun onConnected(bundle: Bundle?) {}
-                override fun onConnectionSuspended(i: Int) {
-                    googleApiClient?.connect()
-                }
-            })
-            .addOnConnectionFailedListener {
-            }.build()
-        googleApiClient?.connect()
-
-        locationRequest = LocationRequest.create()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 30 * 1000.toLong()
-        locationRequest.fastestInterval = 5 * 1000.toLong()
-        val builder = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
-        builder.setAlwaysShow(true)
-        val result: PendingResult<LocationSettingsResult> =
-            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
-        result.setResultCallback { result ->
-            val status: Status = result.status
-            when (status.statusCode) {
-                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
-//                    status.startResolutionForResult(
-//                        requireActivity(),
-//                        REQUESTLOCATION
-//                    )
-
-                    context.startIntentSenderForResult(status.getResolution().getIntentSender(), REQUESTLOCATION, null, 0, 0, 0, null);
-//                    startIntentSenderForResult()
-                } catch (e: IntentSender.SendIntentException) {
-                }
-                else -> {
-                    Toast.makeText(context.requireContext() , "permission granted", Toast.LENGTH_SHORT).show()
-                    startLocationUpdates(context)
-                }
-            }
-        }
-    }
 
 }

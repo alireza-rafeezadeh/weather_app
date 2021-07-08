@@ -4,13 +4,13 @@ import androidx.fragment.app.Fragment
 
 
 interface LocationHelper {
-    fun checkLocationPermission(
+    fun askForLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,
         featureUnavailableAction: () -> Unit
     )
 
-    fun getLatLong(fragment: Fragment, isGrantedAction: (latLong: String) -> Unit)
+    fun getLatLong(fragment: Fragment)
 
     fun hasLocationPermission(fragment: Fragment) : Boolean
 

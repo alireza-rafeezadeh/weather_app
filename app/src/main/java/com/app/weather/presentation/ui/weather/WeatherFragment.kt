@@ -2,12 +2,12 @@ package com.app.weather.presentation.ui.weather
 
 import android.app.Activity
 import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.app.core.domain.RequestCodes
 import com.app.core.domain.ResultWrapper
 import com.app.core.domain.weather.ForecastResponse
 import com.app.core.domain.weather.Hour
@@ -17,10 +17,6 @@ import com.app.weather.presentation.util.location.LocationHelper
 import com.app.weather.presentation.util.viewBinding
 import com.app.weather.presentation.weather.getURL
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.PendingResult
-import com.google.android.gms.common.api.Status
-import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -29,15 +25,12 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
 
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val weatherViewModel: WeatherViewModel by viewModels()
-//    private val REQUEST_CHECK_SETTINGS = 3324
 
-    protected val REQUEST_CHECK_SETTINGS = 0x1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableLoc()
 
-        locationHelper.checkLocationPermission(this, {
+        locationHelper.askForLocationPermission(this, {
             weatherViewModel.forecast(it)
         }, {
 
@@ -47,21 +40,9 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInFragment()
-//        getDefaultData()
+        getDefaultData()
 //        askLocationPermission()
 
-
-//        locationHelper.getLocationDialog(this)
-
-//        val manager =
-//            getSystemService(requireContext(),LOCATION_SERVICE::class.java)
-//
-//        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            Toast.makeText(requireContext(), "gps is not enabled", Toast.LENGTH_SHORT).show()
-//        }
-
-
-//        getLocationDialog()
     }
 
     private fun getDefaultData() {
@@ -71,7 +52,7 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
     }
 
     private fun askLocationPermission() {
-        locationHelper.checkLocationPermission(this, {
+        locationHelper.askForLocationPermission(this, {
             weatherViewModel.forecast(it)
         }, {
             Toast.makeText(
@@ -142,18 +123,7 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
 
 
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Toast.makeText(requireContext(), "on request permission result", Toast.LENGTH_SHORT).show()
-
-    }
-
-    private var googleApiClient: GoogleApiClient? = null
-    private val REQUESTLOCATION = 199
+   /* private var googleApiClient: GoogleApiClient? = null
 
     private fun enableLoc() {
         googleApiClient = GoogleApiClient.Builder(requireContext())
@@ -194,7 +164,7 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
                 }
             }
         }
-    }
+    }*/
 
 
     override fun onActivityResult(
@@ -205,14 +175,19 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         super.onActivityResult(requestCode, resultCode, data)
         Toast.makeText(requireContext(), "on activity result called", Toast.LENGTH_SHORT).show()
         when (requestCode) {
-            REQUESTLOCATION -> when (resultCode) {
+            RequestCodes.LOCATION -> when (resultCode) {
                 Activity.RESULT_OK -> {
                     Toast.makeText(requireContext(), "permission accepted", Toast.LENGTH_SHORT)
                         .show()
                     locationHelper.startLocationUpdates(this)
                 }
                 Activity.RESULT_CANCELED -> {
-
+                    Toast.makeText(
+                        requireContext(),
+                        "GPS access is needed for getting your weather data",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
                 }
             }
         }
