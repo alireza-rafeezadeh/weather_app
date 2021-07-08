@@ -3,6 +3,7 @@ package com.app.weather.presentation.ui.weather
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -37,14 +38,15 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInFragment()
-//        askLocationPermission()
 
-        getDefaultData()
-        locationHelper.askForLocationPermission(this, {
+        /*locationHelper.askForLocationPermission(this, {
             weatherViewModel.forecast(it)
         }, {
 
-        })
+        })*/
+
+        Log.i("we_live_data", weatherViewModel.forecastLiveData.value.toString())
+        getWeatherInfo()
 
     }
 
@@ -55,16 +57,20 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         }
     }
 
-    private fun askLocationPermission() {
-        locationHelper.askForLocationPermission(this, {
-            weatherViewModel.forecast(it)
-        }, {
+    private fun getWeatherInfo() {
+        if (weatherViewModel.forecastLiveData.value != null)
+            return
+
+        locationHelper.askForLocationPermission(this, { latLong ->
+            weatherViewModel.forecast(latLong)
+        }, { error ->
             Toast.makeText(
                 requireContext(),
-                getString(R.string.location_permission_denied_message),
+                error,
                 Toast.LENGTH_SHORT
             ).show()
         })
+//        weatherViewModel.forecast("Chicago")
     }
 
     private fun observeInFragment() {
@@ -129,50 +135,48 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
     }
 
 
+    /* private var googleApiClient: GoogleApiClient? = null
 
+     private fun enableLoc() {
+         googleApiClient = GoogleApiClient.Builder(requireContext())
+             .addApi(LocationServices.API)
+             .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                 override fun onConnected(bundle: Bundle?) {}
+                 override fun onConnectionSuspended(i: Int) {
+                     googleApiClient?.connect()
+                 }
+             })
+             .addOnConnectionFailedListener {
+             }.build()
+         googleApiClient?.connect()
+         val locationRequest = LocationRequest.create()
+         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+         locationRequest.interval = 30 * 1000.toLong()
+         locationRequest.fastestInterval = 5 * 1000.toLong()
+         val builder = LocationSettingsRequest.Builder()
+             .addLocationRequest(locationRequest)
+         builder.setAlwaysShow(true)
+         val result: PendingResult<LocationSettingsResult> =
+             LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+         result.setResultCallback { result ->
+             val status: Status = result.status
+             when (status.statusCode) {
+                 LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+ //                    status.startResolutionForResult(
+ //                        requireActivity(),
+ //                        REQUESTLOCATION
+ //                    )
 
-   /* private var googleApiClient: GoogleApiClient? = null
-
-    private fun enableLoc() {
-        googleApiClient = GoogleApiClient.Builder(requireContext())
-            .addApi(LocationServices.API)
-            .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
-                override fun onConnected(bundle: Bundle?) {}
-                override fun onConnectionSuspended(i: Int) {
-                    googleApiClient?.connect()
-                }
-            })
-            .addOnConnectionFailedListener {
-            }.build()
-        googleApiClient?.connect()
-        val locationRequest = LocationRequest.create()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 30 * 1000.toLong()
-        locationRequest.fastestInterval = 5 * 1000.toLong()
-        val builder = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
-        builder.setAlwaysShow(true)
-        val result: PendingResult<LocationSettingsResult> =
-            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
-        result.setResultCallback { result ->
-            val status: Status = result.status
-            when (status.statusCode) {
-                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
-//                    status.startResolutionForResult(
-//                        requireActivity(),
-//                        REQUESTLOCATION
-//                    )
-
-                    startIntentSenderForResult(status.getResolution().getIntentSender(), REQUESTLOCATION, null, 0, 0, 0, null);
-//                    startIntentSenderForResult()
-                } catch (e: IntentSender.SendIntentException) {
-                }
-                else -> {
-                    Toast.makeText(requireContext(), "permission granted", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }*/
+                     startIntentSenderForResult(status.getResolution().getIntentSender(), REQUESTLOCATION, null, 0, 0, 0, null);
+ //                    startIntentSenderForResult()
+                 } catch (e: IntentSender.SendIntentException) {
+                 }
+                 else -> {
+                     Toast.makeText(requireContext(), "permission granted", Toast.LENGTH_SHORT).show()
+                 }
+             }
+         }
+     }*/
 
 
     override fun onActivityResult(
