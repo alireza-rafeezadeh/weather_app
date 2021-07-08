@@ -3,7 +3,6 @@ package com.app.weather.presentation.ui.weather
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -19,13 +18,11 @@ import com.app.weather.presentation.util.location.LocationHelper
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fragment_weather) {
 
     private val binding by viewBinding(FragmentWeatherBinding::bind)
     private val weatherViewModel: WeatherViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,18 +32,8 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInFragment()
-
-        /*locationHelper.askForLocationPermission(this, {
-            weatherViewModel.forecast(it)
-        }, {
-
-        })*/
-
-
         setOnClickListeners()
-        Log.i("we_live_data", weatherViewModel.forecastLiveData.value.toString())
         getWeatherInfo()
-
     }
 
     private fun setOnClickListeners() {
@@ -55,14 +42,7 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         }
     }
 
-    private fun getDefaultData() {
-        // TODO:
-        if (!locationHelper.hasLocationPermission(this)) {
-            weatherViewModel.forecast("Chicago")
-        }
-    }
-
-    private fun getWeatherInfo(forceUpdate : Boolean = false) {
+    private fun getWeatherInfo(forceUpdate: Boolean = false) {
         if (weatherViewModel.forecastLiveData.value != null && !forceUpdate)
             return
 
@@ -75,7 +55,6 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
                 Toast.LENGTH_SHORT
             ).show()
         })
-//        weatherViewModel.forecast("Chicago")
     }
 
     private fun observeInFragment() {
@@ -116,13 +95,11 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
     }
 
     private fun initSectionForecast(data: ForecastResponse) {
-//        binding.day1TextView.text = data.forecast.forecastday[0].date
         binding.temp1TextView.text = "${data.forecast.forecastday[0].day.avgtemp_c}º"
         binding.humidity1TextView.text = "${data.forecast.forecastday[0].day.avghumidity}%"
         Glide.with(this).load(data.forecast.forecastday[0].day.condition.icon.getURL())
             .into(binding.weathIc1ImageView)
 
-//        binding.day2TextView.text = data.forecast.forecastday[1].date
         binding.temp2TextView.text = "${data.forecast.forecastday[1].day.avgtemp_c}º"
         binding.humidity2TextView.text = "${data.forecast.forecastday[1].day.avghumidity}%"
         Glide.with(this).load(data.forecast.forecastday[1].day.condition.icon.getURL())
@@ -134,56 +111,9 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         Glide.with(this).load(data.forecast.forecastday[2].day.condition.icon.getURL())
             .into(binding.weathIc3ImageView)
 
-//        binding.day2TextView.text = data.forecast.forecastday[0].date
-
         Glide.with(this).load(data.current.condition.icon.getURL())
             .into(binding.currentConditionImageView)
     }
-
-
-    /* private var googleApiClient: GoogleApiClient? = null
-
-     private fun enableLoc() {
-         googleApiClient = GoogleApiClient.Builder(requireContext())
-             .addApi(LocationServices.API)
-             .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
-                 override fun onConnected(bundle: Bundle?) {}
-                 override fun onConnectionSuspended(i: Int) {
-                     googleApiClient?.connect()
-                 }
-             })
-             .addOnConnectionFailedListener {
-             }.build()
-         googleApiClient?.connect()
-         val locationRequest = LocationRequest.create()
-         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-         locationRequest.interval = 30 * 1000.toLong()
-         locationRequest.fastestInterval = 5 * 1000.toLong()
-         val builder = LocationSettingsRequest.Builder()
-             .addLocationRequest(locationRequest)
-         builder.setAlwaysShow(true)
-         val result: PendingResult<LocationSettingsResult> =
-             LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
-         result.setResultCallback { result ->
-             val status: Status = result.status
-             when (status.statusCode) {
-                 LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
- //                    status.startResolutionForResult(
- //                        requireActivity(),
- //                        REQUESTLOCATION
- //                    )
-
-                     startIntentSenderForResult(status.getResolution().getIntentSender(), REQUESTLOCATION, null, 0, 0, 0, null);
- //                    startIntentSenderForResult()
-                 } catch (e: IntentSender.SendIntentException) {
-                 }
-                 else -> {
-                     Toast.makeText(requireContext(), "permission granted", Toast.LENGTH_SHORT).show()
-                 }
-             }
-         }
-     }*/
-
 
     override fun onActivityResult(
         requestCode: Int,
@@ -199,7 +129,7 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
                 Activity.RESULT_CANCELED -> {
                     Toast.makeText(
                         requireContext(),
-                        "GPS access is needed for getting your weather data",
+                        getString(R.string.gps_denied_error),
                         Toast.LENGTH_SHORT
                     )
                         .show()
@@ -207,5 +137,4 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
             }
         }
     }
-
 }

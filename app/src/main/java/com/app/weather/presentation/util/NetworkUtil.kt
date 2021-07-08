@@ -4,10 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 
-/**
- * Created by alirezarafeezadeh on 7/8/21.
- */
-
 object NetworkUtil {
 
     fun isNetworkDisconnected(activity: AppCompatActivity):Boolean{

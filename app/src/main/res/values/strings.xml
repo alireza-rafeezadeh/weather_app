@@ -6,4 +6,6 @@
     <string name="unknown_error">Unknown error</string>
     <string name="service_unavailable">Service unavailable</string>
     <string name="network_unavailable">Please check your internet connection!</string>
+    <string name="gps_denied_error">GPS access is needed for getting your weather data</string>
+    <string name="location_permission_denied_error">Location permission was not granted.</string>
 </resources>

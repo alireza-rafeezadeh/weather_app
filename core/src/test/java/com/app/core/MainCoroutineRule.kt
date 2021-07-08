@@ -10,11 +10,6 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-/**
- * Create by Alireza Rafeezadeh
- * in 5/16/21, Sun
- **/
-
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(private val dispatcher: CoroutineDispatcher = TestCoroutineDispatcher())
     : TestWatcher() , TestCoroutineScope by TestCoroutineScope(dispatcher) {

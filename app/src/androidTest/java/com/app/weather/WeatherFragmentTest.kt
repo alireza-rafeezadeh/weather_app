@@ -44,13 +44,10 @@ class WeatherFragmentTest {
 
         onView(withId(R.id.wind_speed_text_view))
             .check(matches(withText("")))
-
         onView(withId(R.id.humidity_text_view))
             .check(matches(withText("")))
-
         onView(withId(R.id.cloud_percentage_text_view))
             .check(matches(withText("")))
-
         onView(withId(R.id.pressure_text_view))
             .check(matches(withText("")))
     }

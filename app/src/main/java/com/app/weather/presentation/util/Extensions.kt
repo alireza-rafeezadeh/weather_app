@@ -16,10 +16,10 @@ fun View.visible() {
     this.visibility = View.VISIBLE
 }
 
-fun SwipeRefreshLayout.startRefreshing(){
+fun SwipeRefreshLayout.startRefreshing() {
     this.isRefreshing = true
 }
 
-fun SwipeRefreshLayout.stopRefreshing(){
+fun SwipeRefreshLayout.stopRefreshing() {
     this.isRefreshing = false
 }
