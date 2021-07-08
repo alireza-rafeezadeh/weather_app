@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/weather_swipe_refresh_layout"
     android:layout_height="match_parent"
-    android:background="@color/gallery"
-    android:fillViewport="true">
+    android:background="@color/gallery">
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,7 +20,7 @@
 
         <TextView
             android:id="@+id/current_temperature_text_view"
-            android:layout_width="103dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
             android:fontFamily="@font/calibri"
@@ -39,21 +46,21 @@
             android:id="@+id/current_location_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="Tehran"
+            android:layout_marginTop="4dp"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="@+id/current_condition_text_view"
             app:layout_constraintStart_toStartOf="@+id/current_condition_text_view"
-            app:layout_constraintTop_toBottomOf="@+id/current_condition_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/current_condition_text_view"
+            tools:text="Tehran" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@drawable/weather_section_bg"
             android:id="@+id/hourlyForecastRecyclerView"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginStart="@dimen/weather_section_margin"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="@dimen/weather_section_margin"
+            android:background="@drawable/weather_section_bg"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="135dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/weather_section_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/view"
@@ -421,4 +428,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</ScrollView>
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

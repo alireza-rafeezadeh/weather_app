@@ -7,6 +7,7 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -29,12 +30,30 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
     private var onError: (error: String) -> Unit = { }
     private var googleApiClient: GoogleApiClient? = null
 
+    private lateinit var requestPermissionLauncher : ActivityResultLauncher<String>
+
+    override fun registerPermissionLauncher(
+        fragment: Fragment
+    ) {
+       requestPermissionLauncher =
+            fragment.registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    enableGPS(fragment)
+                } else {
+                    onError("Location permission was not granted.")
+                }
+            }
+    }
+
     override fun askForLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,
         featureUnavailableAction: (error: String) -> Unit
     ) {
         onLatLongReceived = isGrantedAction
+        /*
         onError = featureUnavailableAction
         val requestPermissionLauncher =
             fragment.registerForActivityResult(
@@ -48,7 +67,7 @@ class LocationHelperImpl @Inject constructor() : LocationHelper {
                 } else {
                     onError("Location permission was not granted.")
                 }
-            }
+            }*/
 
         when {
             ContextCompat.checkSelfPermission(

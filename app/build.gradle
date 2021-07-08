@@ -41,6 +41,7 @@ dependencies {
 
     implementation(AndroidXDependencies.constraintlayout)
     implementation(AndroidXDependencies.location_services)
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     implementation(JetpackDependencies.hilt_android)
     kapt(JetpackDependencies.hilt_compiler)

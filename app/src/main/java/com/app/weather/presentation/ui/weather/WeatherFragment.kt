@@ -14,11 +14,8 @@ import com.app.core.domain.weather.ForecastResponse
 import com.app.core.domain.weather.Hour
 import com.app.weather.R
 import com.app.weather.databinding.FragmentWeatherBinding
-import com.app.weather.presentation.util.getURL
-import com.app.weather.presentation.util.gone
+import com.app.weather.presentation.util.*
 import com.app.weather.presentation.util.location.LocationHelper
-import com.app.weather.presentation.util.viewBinding
-import com.app.weather.presentation.util.visible
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +29,7 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        locationHelper.registerPermissionLauncher(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,9 +43,16 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         })*/
 
 
+        setOnClickListeners()
         Log.i("we_live_data", weatherViewModel.forecastLiveData.value.toString())
         getWeatherInfo()
 
+    }
+
+    private fun setOnClickListeners() {
+        binding.weatherSwipeRefreshLayout.setOnRefreshListener {
+            getWeatherInfo(true)
+        }
     }
 
     private fun getDefaultData() {
@@ -58,8 +62,8 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         }
     }
 
-    private fun getWeatherInfo() {
-        if (weatherViewModel.forecastLiveData.value != null)
+    private fun getWeatherInfo(forceUpdate : Boolean = false) {
+        if (weatherViewModel.forecastLiveData.value != null && !forceUpdate)
             return
 
         locationHelper.askForLocationPermission(this, { latLong ->
@@ -78,17 +82,18 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         weatherViewModel.forecastLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResultWrapper.Success -> {
-                    binding.weatherProgressBar.gone()
+                    binding.weatherSwipeRefreshLayout.stopRefreshing()
                     initSectionToday(it.data)
                     initSectionForecast(it.data)
                     initRecyclerView(it.data.forecast.forecastday[0].hour)
                 }
                 is ResultWrapper.ErrorString -> {
+                    binding.weatherSwipeRefreshLayout.stopRefreshing()
                     Toast.makeText(requireContext(), it.exception, Toast.LENGTH_SHORT).show()
                     binding.weatherProgressBar.gone()
                 }
                 is ResultWrapper.InProgress -> {
-                    binding.weatherProgressBar.visible()
+                    binding.weatherSwipeRefreshLayout.startRefreshing()
                 }
             }
         }
@@ -105,27 +110,27 @@ class WeatherFragment(val locationHelper: LocationHelper) : Fragment(R.layout.fr
         binding.currentLocationTextView.text = data.location.name
 
         binding.windSpeedTextView.text = "${data.current.wind_kph} km/h"
-        binding.humidityTextView.text = data.current.humidity.toString()
-        binding.cloudPercentageTextView.text = data.current.cloud.toString()
+        binding.humidityTextView.text = "${data.current.humidity}%"
+        binding.cloudPercentageTextView.text = "${data.current.cloud}%"
         binding.pressureTextView.text = data.current.pressure_in.toString()
     }
 
     private fun initSectionForecast(data: ForecastResponse) {
 //        binding.day1TextView.text = data.forecast.forecastday[0].date
-        binding.temp1TextView.text = "${data.forecast.forecastday[0].day.avgtemp_c} C"
-        binding.humidity1TextView.text = "${data.forecast.forecastday[0].day.avghumidity} C"
+        binding.temp1TextView.text = "${data.forecast.forecastday[0].day.avgtemp_c}º"
+        binding.humidity1TextView.text = "${data.forecast.forecastday[0].day.avghumidity}%"
         Glide.with(this).load(data.forecast.forecastday[0].day.condition.icon.getURL())
             .into(binding.weathIc1ImageView)
 
 //        binding.day2TextView.text = data.forecast.forecastday[1].date
-        binding.temp2TextView.text = "${data.forecast.forecastday[1].day.avgtemp_c} C"
-        binding.humidity2TextView.text = "${data.forecast.forecastday[1].day.avghumidity} C"
+        binding.temp2TextView.text = "${data.forecast.forecastday[1].day.avgtemp_c}º"
+        binding.humidity2TextView.text = "${data.forecast.forecastday[1].day.avghumidity}%"
         Glide.with(this).load(data.forecast.forecastday[1].day.condition.icon.getURL())
             .into(binding.weathIc2ImageView)
 
         binding.day3TextView.text = data.forecast.forecastday[2].date
-        binding.temp3TextView.text = "${data.forecast.forecastday[2].day.avgtemp_c} C"
-        binding.humidity3TextView.text = "${data.forecast.forecastday[2].day.avghumidity} C"
+        binding.temp3TextView.text = "${data.forecast.forecastday[2].day.avgtemp_c}º"
+        binding.humidity3TextView.text = "${data.forecast.forecastday[2].day.avghumidity}%"
         Glide.with(this).load(data.forecast.forecastday[2].day.condition.icon.getURL())
             .into(binding.weathIc3ImageView)
 

@@ -4,6 +4,11 @@ import androidx.fragment.app.Fragment
 
 
 interface LocationHelper {
+
+    fun registerPermissionLauncher(
+        fragment: Fragment
+    )
+
     fun askForLocationPermission(
         fragment: Fragment,
         isGrantedAction: (latLong: String) -> Unit,

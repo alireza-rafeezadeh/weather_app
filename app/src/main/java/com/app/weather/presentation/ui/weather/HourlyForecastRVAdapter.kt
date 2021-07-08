@@ -28,7 +28,7 @@ class HourlyForecastRVAdapter(val hours: List<Hour>) :
             with(binding) {
                 hourTextView.text = hour.time.substringAfter(" ")
                 temperatureTextView.text = hour.temp_c.toString()
-                humidityTextView.text = hour.humidity.toString()
+                humidityTextView.text = "${hour.humidity}%"
             }
         }
     }
